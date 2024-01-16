@@ -6,15 +6,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { validationShema } from "./validation";
 import { useContext, useState } from "react";
 import { Context } from "../../index";
+import { HOME_ROUTE, LOGIN_ROUTE } from "../../utils/consts";
+import AlertMassage from "../../components/AlertMessage";
+import { useNavigate } from 'react-router-dom'
 
 
 const defaultTheme = createTheme();
 
 const Registration = () => {
 
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
-
-  const {userStore} = useContext(Context);
+  const {userStore, alertStore} = useContext(Context);
   
 
   const {
@@ -27,15 +30,19 @@ const Registration = () => {
     resolver: yupResolver(validationShema),
   });
 
-  const onSubmit = async ({name, email, password}) => {
-    try {
-      setLoading(true)
-      userStore.registration(name, email, password).finally(() => {
+  const onSubmit = ({name, email, password}) => {
+    setLoading(true)
+    userStore.registration(name, email, password)
+      .then((res) => {
+        if(!res) {
+          alertStore.setIsOpen(true)
+        } else {
+          navigate(HOME_ROUTE)
+        }
+      })
+      .finally(() => {
         setLoading(false)
       });
-    } catch(error) {
-      console.log(error)
-    }
   };
 
   return (
@@ -129,7 +136,7 @@ const Registration = () => {
             </LoadingButton>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href={LOGIN_ROUTE} variant="body2">
                   У тебя есть аккаунт? Перейди для входа
                 </Link>
               </Grid>
@@ -137,7 +144,7 @@ const Registration = () => {
           </Box>
         </Box>
       </Container>
-      
+      <AlertMassage duration = {20000} severity = 'error' text = {userStore.errorMess}/>
     </ThemeProvider>
   );
 }

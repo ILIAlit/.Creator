@@ -6,11 +6,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { validationShema } from "./validation";
 import { useContext, useState } from "react";
 import {Context}  from '../../index';
+import { HOME_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
+import AlertMessage from "../../components/AlertMessage";
+import { useNavigate } from 'react-router-dom'
 
 const defaultTheme = createTheme();
 
 const Login = () => {
-  const {userStore} = useContext(Context)
+  const navigate = useNavigate();
+  const {userStore, alertStore} = useContext(Context)
   const [loading, setLoading] = useState(false)
 
   const {control, handleSubmit, formState: { errors } } = useForm({
@@ -18,12 +22,16 @@ const Login = () => {
   })
 
   const onSubmit = async ({name, password}) => {
-    try {
-      setLoading(true)
-      userStore.login(name, password).finally(() => setLoading(false))
-    } catch(error) {
-      console.log(error)
-    }
+    setLoading(true)
+    userStore.login(name, password)
+      .then((res) => {
+        if(!res) {
+          alertStore.setIsOpen(true)
+        } else {
+          navigate(HOME_ROUTE)
+        }
+      })
+      .finally(() => setLoading(false))
   };
 
   return (
@@ -33,6 +41,7 @@ const Login = () => {
           <Box
             sx={{
               marginTop: 8,
+              mb: 10,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -83,7 +92,7 @@ const Login = () => {
               </LoadingButton>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="/register" variant="body2">
+                  <Link href={REGISTRATION_ROUTE} variant="body2">
                     У тебя нет аккаунта? Пройди регистрацию!
                   </Link>
                 </Grid>
@@ -91,7 +100,7 @@ const Login = () => {
             </Box>
           </Box>
       </Container>
-      {/* <AlertMassage duration = {20000} severity = 'error' text = 'Ошибка авторизации!' /> */}
+      <AlertMessage duration = {20000} severity = 'error' text = {userStore.errorMess} />
     </ThemeProvider>
   );
 }

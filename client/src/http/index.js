@@ -1,7 +1,8 @@
 import axios from 'axios';
 import localStorageService from '../service/localStorageService';
+import { API_URL } from '../utils/consts';
 
-const API_URL = process.env.REACT_APP_API_URL + 'api';
+
 
 const $api = axios.create({
   baseURL: API_URL,

@@ -1,3 +1,4 @@
+const UserDto = require("../dtos/userDto");
 const ApiError = require("../error/ApiError");
 const userService = require("../service/userService");
 
@@ -23,7 +24,8 @@ class UserController {
   };
   async check(req, res, next) {
     try {
-      return res.json(res.query);
+      const newAccessToken = await userService.check(req.user)
+      return res.json(newAccessToken);
     } catch(error) {
       next(error);
     }

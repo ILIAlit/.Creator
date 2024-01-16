@@ -40,6 +40,15 @@ class UserService {
       user: userDto,
     };
   };
+
+  async check(userData) {
+    const userDto = new UserDto(userData)
+    const token = tokenService.generateToken({...userDto})
+    return {
+      token,
+      user: userDto
+    }
+  }
 }
 
 module.exports = new UserService();
