@@ -1,173 +1,73 @@
-import { Instagram, PhotoCamera, Telegram } from "@mui/icons-material";
-import { Avatar, Box, Button, Container, CssBaseline, IconButton, TextField, ThemeProvider, Tooltip, Typography, createTheme } from "@mui/material";
-import { useEffect, useState } from "react";
-import { LoadingButton } from "@mui/lab";
-import SaveIcon from '@mui/icons-material/Save';
+import { Box, Button, Container, CssBaseline, ThemeProvider, Typography, createTheme } from "@mui/material";
+import { useContext, useState } from "react";
+import { Context } from "../context";
+import { observer } from 'mobx-react-lite'
+import ProfileCreateForm from "../components/Profile/ProfileCreateForm";
+import ProfilePreview from "../components/Profile/ProfilePreview";
 
 const defaultTheme = createTheme();
 
 const Profile = () => {
 
+  const {userStore: {user}} = useContext(Context)
+  const {name} = user
 
-
-  const [avatar, setAvatar] = useState(null);
-  const [instagram, setInstagram] = useState(null);
-  const [telegram, setTelegram] = useState(null);
-  const [avatarUrl, setAvatarUrl] = useState(null);
-  const [isProfile, setIsProfile] = useState(null);
+  const [previewVisible, setPreviewVisible] = useState(true);
+  const [isProfile, setIsProfile] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (avatar) {
-      const url = URL.createObjectURL(avatar);
-      setAvatarUrl(url);
-      return () => URL.revokeObjectURL(url);
-    }
-  }, [avatar]);
-
-
-  const handleAvatarChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        alert("Файл слишком большой. Выберите файл размером не более 5 МБ.");
-      } else if (!file.type.startsWith("image/")) {
-        alert("Файл не является изображением. Выберите файл изображения.");
-      } else {
-        setAvatar(file);
-      }
-    }
-  };
-
-  const handleInstagramChange = (event) => {
-    const newValue = event.target.value;
-    setInstagram(newValue);
+  const onClosePreview = () => {
+    setPreviewVisible(false)
   }
 
-  const handleTelegramChange = (event) => {
-    const newValue = event.target.value;
-    setTelegram(newValue);
+  const createProfile = () => {
+    setIsProfile(true)
+    setPreviewVisible(false)
   }
 
-  const removeCover = () => {
-    setAvatar(null);
-    setAvatarUrl(null);
-  };
+  const onCloseSave = () => {
+    setPreviewVisible(true)
+  }
 
-  const handleSubmit = (event) => {
-    try {
 
-    } catch(error) {
-
-    }
-  };
-
-  
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth = "sx">
         <CssBaseline />
-        <Box 
+        <Box
           sx={{
-            marginTop: 8,
+            p:5,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-          }}
-          component="form"
-          onSubmit={handleSubmit}>
-          <Typography component="h1" variant="h3" sx={{mb: 3}}>Привет, {}</Typography>
-          {isProfile && (
-            <>
-            <Tooltip title = {!(!!avatarUrl) ? "Выберите изображение" : "Удалить"} >
-            <Avatar
-                sx={{ width: 120, height: 120 }}
-                src={avatarUrl}
-                size="large"
-                variant="circle"
-                onClick = {removeCover}>
-              <IconButton
-                component="label"
-                color="primary">
-                  <PhotoCamera />
-                  <input 
-                    type="file"
-                    name="cover"
-                    accept="image/*"
-                    hidden
-                    onChange={handleAvatarChange}
-                  />
-              </IconButton>
-            </Avatar>
-          </Tooltip>
-          <Box maxWidth="xs">
-            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-              <Instagram sx={{ color: 'action.active', mr: 1, my: 1.3 }} />
-              <TextField
-                fullWidth
-                value={instagram}
-                name="instagram"
-                label="Инстаграм"
-                type="text"
-                id="instagram"
-                variant="standard"
-                margin="normal"
-                onChange={handleInstagramChange}>
-              </TextField>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-              <Telegram sx={{ color: 'action.active', mr: 1, my: 1.3 }} />
-              <TextField
-                fullWidth
-                value={telegram}
-                name="telegram"
-                label="Телеграм"
-                type="text"
-                id="telegram"
-                variant="standard"
-                margin="normal"
-                onChange={handleTelegramChange}>
-              </TextField>
-            </Box>
-            {true && (
+          }}>
+          <Typography component="h1" variant="h3" sx={{mb: 3}}>Привет, {name}</Typography>
+          {!isProfile && 
+            <Box>
               <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 5, mb: 3, fontSize: '16px'  }}>
-              Изменить
-            </Button>
-            )}
-            {false && (
-              <LoadingButton
-                type="submit"
-                fullWidth
+                onClick={() => createProfile()}
                 variant="contained"
-                sx={{ mt: 5, mb: 3, fontSize: '16px'  }}
-                loadingPosition="start"
-                startIcon={<SaveIcon/>}
-                loading={loading}>
-                  Сохранить
-              </LoadingButton>
-            )}
-          </Box>
-            </>
-          )}
-
-          {!isProfile && (
-            <Button
-              onClick={() => setIsProfile(true)}
-              variant="contained"
-              sx={{ mt: 5, mb: 3, fontSize: '16px'  }}>
-              Создать профиль!
-            </Button>
-          )}
-
+                sx={{ mt: 5, mb: 3, fontSize: '16px'  }}>
+                Создать профиль!
+              </Button>
+            </Box>}
+          {isProfile && 
+            <Box>
+              {previewVisible ? 
+                <ProfilePreview 
+                  telegramLink={true} 
+                  instagramLink={true} 
+                  onClick={onClosePreview}
+                /> 
+                : 
+                <ProfileCreateForm onSave = {onCloseSave} />
+              }  
+            </Box>
+          }
         </Box>
-
-
       </Container>
     </ThemeProvider>
   );
 }
 
-export default Profile;
+export default observer(Profile);

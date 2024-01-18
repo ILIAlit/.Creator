@@ -3,7 +3,7 @@ import AppRouter from "./components/AppRouter";
 import Header from "./components/Header";
 import {observer} from 'mobx-react-lite'
 import { useContext, useEffect } from "react";
-import { Context } from "./index";
+import { Context } from "./context/index";
 
 function App() {
 

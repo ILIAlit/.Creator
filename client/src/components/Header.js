@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Context } from '../index';
+import { Context } from '../context/index';
 import { HOME_ROUTE, LOGIN_ROUTE } from "../utils/consts";
 import localStorageService from "../service/localStorageService";
 import { observer } from 'mobx-react-lite';

@@ -1,15 +1,17 @@
 import {makeAutoObservable} from 'mobx'
 import AuthService from '../service/authService'
 import localStorageService from '../service/localStorageService'
+import ErrorStore from './errorStore'
 
 
 export default class UserStore {
-  _errorMess = ''
+  error
   _user = {}
   _isAuth = false
 
   constructor() {
     makeAutoObservable(this)
+    this.error = new ErrorStore()
   }
 
   setAuth(bool) {
@@ -20,20 +22,12 @@ export default class UserStore {
     this._user = user
   }
 
-  setErrorMess(mess) {
-    this._errorMess = mess
-  }
-
   get isAuth() {
     return this._isAuth
   }
 
   get user() {
     return this._user
-  }
-
-  get errorMess() {
-    return this._errorMess
   }
 
   async login(name, password) {
@@ -44,10 +38,10 @@ export default class UserStore {
       this.setAuth(true)
       this.setUser(user)
       return response
-      
+
     } catch(error) {
       console.log(error)
-      this.setErrorMess(error.response.data.message)
+      this.error.setErrorMess(error.response.data.message)
     }
   }
 

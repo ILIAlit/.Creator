@@ -1,23 +1,27 @@
 import { ThemeProvider } from "@emotion/react";
-import { Box, Container, CssBaseline, createTheme, Typography, Grid, TextField, Link } from "@mui/material";
+import { Box, Container, CssBaseline, createTheme, Typography, Grid, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationShema } from "./validation";
 import { useContext, useState } from "react";
-import {Context}  from '../../index';
+import {Context}  from '../../context/index';
 import { HOME_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
 import AlertMessage from "../../components/AlertMessage";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+import Input from "../../components/Input";
 
 const defaultTheme = createTheme();
 
 const Login = () => {
   const navigate = useNavigate();
-  const {userStore, alertStore} = useContext(Context)
+  const {userStore} = useContext(Context)
+  const [alertOpen, setAlertOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const {control, handleSubmit, formState: { errors } } = useForm({
+  console.log(userStore.error)
+
+  const {control, handleSubmit } = useForm({
     resolver: yupResolver(validationShema),
   })
 
@@ -26,13 +30,17 @@ const Login = () => {
     userStore.login(name, password)
       .then((res) => {
         if(!res) {
-          alertStore.setIsOpen(true)
+          setAlertOpen(true)
         } else {
           navigate(HOME_ROUTE)
         }
       })
       .finally(() => setLoading(false))
   };
+
+  const alertClose = () => {
+    setAlertOpen(false)
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -51,34 +59,23 @@ const Login = () => {
             <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{mt: 3}}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Controller 
-                    name="name"
+                  <Input 
+                    id ="name" 
                     control={control}
-                    render={({field}) => (
-                      <TextField
-                        value={field.value}
-                        onChange={(event) => {field.onChange(event)}}
-                        helperText = {errors.name?.message}
-                        error = {!!errors.name?.message}
-                        fullWidth
-                        label="Имя"
-                        autoFocus/>
-                    )}/>
+                    name="name" 
+                    label="Имя" 
+                    variant="outlined" 
+                    type="text"   
+                  />
                 </Grid>
                 <Grid item xs={12}>
-                  <Controller
-                    name="password"
-                    control={control}
-                    render={({field}) => (
-                      <TextField
-                        value={field.value}
-                        onChange={(event) => {field.onChange(event)}}
-                        helperText = {errors.password?.message}
-                        error = {!!errors.password?.message}
-                        fullWidth
-                        label="Пароль"
-                        type="password"/>
-                    )}/>
+                <Input 
+                  id ="password" 
+                  control={control} 
+                  name="password" 
+                  label="Пароль" 
+                  variant="outlined" 
+                  type="text"  />
                 </Grid>
               </Grid>
               <LoadingButton
@@ -92,7 +89,7 @@ const Login = () => {
               </LoadingButton>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href={REGISTRATION_ROUTE} variant="body2">
+                  <Link to={REGISTRATION_ROUTE} variant="body2">
                     У тебя нет аккаунта? Пройди регистрацию!
                   </Link>
                 </Grid>
@@ -100,7 +97,12 @@ const Login = () => {
             </Box>
           </Box>
       </Container>
-      <AlertMessage duration = {20000} severity = 'error' text = {userStore.errorMess} />
+      <AlertMessage 
+        isOpen={alertOpen} 
+        onClose={alertClose} 
+        duration = {2000} 
+        severity = 'error' 
+        text = {userStore.error.errorMess} />
     </ThemeProvider>
   );
 }
