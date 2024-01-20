@@ -1,4 +1,4 @@
-export default class localStorageService {
+export default class tokenService {
   static getAccessToken() {
     return localStorage.getItem('token');
   };

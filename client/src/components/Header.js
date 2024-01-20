@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
-import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography, Button, Tooltip, Avatar, styled, alpha, InputBase } from "@mui/material";
+import { AppBar, Box, Container, IconButton, Menu, MenuItem, Toolbar, Typography, Button, Tooltip, Avatar, styled, alpha, InputBase, CssBaseline } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Context } from '../context/index';
 import { HOME_ROUTE, LOGIN_ROUTE } from "../utils/consts";
-import localStorageService from "../service/localStorageService";
 import { observer } from 'mobx-react-lite';
 
 const Search = styled('div')(({ theme }) => ({
@@ -56,7 +55,6 @@ const Header = () => {
 
   const {userStore} = useContext(Context)
   const {isAuth, user} = userStore
-  console.log(isAuth, user)
   const navigate = useNavigate();
   
 
@@ -86,6 +84,7 @@ const Header = () => {
   return (
     <AppBar 
       position="fix" className="appBar">
+      <CssBaseline />
       <Container maxWidth="xl">
         <Toolbar disableGutters>
         <Typography 
@@ -180,21 +179,22 @@ const Header = () => {
             </Toolbar>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="click!">
-              {!isAuth && (
-                <Button
-                  variant="contained"
-                  onClick={() => navigate(LOGIN_ROUTE)}
-                  sx={{ my: 2, color: 'white', display: 'block', textDecoration: 'none' }}>
-                    Войти
-                </Button>
-              )}
-              {isAuth && (
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="avatar" src= {user.avatar} />
-                </IconButton>
-              )}
-              
+            <Tooltip>
+              <>
+                {!isAuth && (
+                  <Button
+                    variant="contained"
+                    onClick={() => navigate(LOGIN_ROUTE)}
+                    sx={{ my: 2, color: 'white', display: 'block', textDecoration: 'none' }}>
+                      Войти
+                  </Button>
+                )}
+                {isAuth && (
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="avatar" src= {user.avatar}>{user.name[0]}</Avatar>
+                  </IconButton>
+                )}
+              </>
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}

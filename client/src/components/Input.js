@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form";
 
 
 
-const Input = ({control, variant, id, type, label, name}) => {
+const Input = ({control, variant, id, type, label, name, error, helperText}) => {
   return (
     <Controller 
       name={name}
@@ -11,6 +11,8 @@ const Input = ({control, variant, id, type, label, name}) => {
       render={({field}) => 
         <TextField
           {...field}
+          error = {error}
+          helperText = {helperText}
           fullWidth
           label={label}
           type={type}

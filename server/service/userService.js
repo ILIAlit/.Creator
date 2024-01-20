@@ -1,30 +1,35 @@
-const { User } = require("../models/models");
 const bcrypt = require('bcrypt');
 const generateToken = require('./tokenService');
 const UserDto = require("../dtos/userDto");
 const tokenService = require("./tokenService");
 const ApiError = require("../error/ApiError");
 
+const User = require("../data/repositories/userRepository");
+const Profile = require('../data/repositories/profileRepository');
+const profileService = require('./profileService');
+
 
 class UserService {
   async registration(name, email, password) {
-    const candidate = await User.findOne({where: {name}});
+    const candidate = await User.findOne(name);
     if(candidate) {
       throw ApiError.badRequest(`Пользователь с именем ${name} существует`);
     };
     const hashPassword = await bcrypt.hash(password, 3);
-    const user = await User.create({name, email, password: hashPassword});
-    const userDto = new UserDto(user);
+    const user = await User.create(name, email, hashPassword);
+
+    const avatar = await profileService.getProfileAvatar(user)
+    const userDto = new UserDto(user, avatar);
     const token = tokenService.generateToken({...userDto});
-    
+
     return {
       token,
-      user: userDto,
+      user: userDto
     }
   };
 
   async login(name, password) {
-    const user = await User.findOne({where: {name}});
+    const user = await User.findOne(name);
     if(!user) {
       throw ApiError.badRequest(`Пользователь с именем ${name} не существует`);
     };
@@ -32,7 +37,9 @@ class UserService {
     if(!isPassEquals) {
       throw ApiError.badRequest('Неверный пароль');
     };
-    const userDto = new UserDto(user);
+    
+    const avatar = await profileService.getProfileAvatar(user)
+    const userDto = new UserDto(user, avatar);
     const token = tokenService.generateToken({...userDto});
     
     return {

@@ -2,8 +2,8 @@ module.exports = class UserDto {
   name;
   avatar;
 
-  constructor({avatar, name}) {
+  constructor(user, avatar) {
     this.avatar = avatar;
-    this.name = name;
+    this.name = user.name;
   };
 }

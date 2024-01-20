@@ -1,17 +1,14 @@
 import {makeAutoObservable} from 'mobx'
 import AuthService from '../service/authService'
-import localStorageService from '../service/localStorageService'
-import ErrorStore from './errorStore'
+import tokenService from '../service/tokenService'
 
 
 export default class UserStore {
-  error
   _user = {}
   _isAuth = false
 
   constructor() {
     makeAutoObservable(this)
-    this.error = new ErrorStore()
   }
 
   setAuth(bool) {
@@ -33,15 +30,15 @@ export default class UserStore {
   async login(name, password) {
     try {
       const response = await AuthService.login(name, password)
-      const {data: {user, token}} = response
-      localStorageService.setAccessToken(token.accessToken)
-      this.setAuth(true)
-      this.setUser(user)
+      if(response) {
+        const {data: {user, token}} = response
+        tokenService.setAccessToken(token.accessToken)
+        this.setAuth(true)
+        this.setUser(user)
+      }
       return response
-
-    } catch(error) {
-      console.log(error)
-      this.error.setErrorMess(error.response.data.message)
+    } catch({response: {data}}) {
+      return {error: data.message}
     }
   }
 
@@ -49,37 +46,35 @@ export default class UserStore {
     try {
       const response = await AuthService.registration(name, email, password)
       const {data: {user, token}} = response;
-      localStorageService.setAccessToken(token.accessToken)
+      tokenService.setAccessToken(token.accessToken)
       this.setAuth(true)
       this.setUser(user)
       return response
-    } catch(error) {
-      console.log(error)
-      this.setErrorMess(error.response.data.message)
+    } catch({response: {data}}) {
+      return {error: data.message}
     }
   }
 
   async logout() {
     try {
-      localStorageService.removeToken()
+      tokenService.removeToken()
       this.setAuth(false)
       this.setUser({})
-    } catch(error) {
-      console.log(error)
+    } catch({response: {data}}) {
+      return {error: data.message}
     }
   }
 
   async authCheck() {
     try { 
       const response = await AuthService.check()
-      console.log(response)
       const {data: {user, token}} = response;
-      localStorageService.setAccessToken(token.accessToken)
+      tokenService.setAccessToken(token.accessToken)
       this.setAuth(true)
       this.setUser(user)
       return response
-    } catch(error) {
-      console.log(error)
+    } catch({response: {data}}) {
+      return {error: data.message}
     }
   }
 }

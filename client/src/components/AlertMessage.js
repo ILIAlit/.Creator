@@ -1,15 +1,16 @@
 import { Snackbar, Alert } from "@mui/material";
 import {observer} from 'mobx-react-lite'
+import { useContext } from "react";
+import { Context } from "../context";
 
-const AlertMassage = ({duration, severity, text, isOpen, onClose}) => {
+const AlertMassage = () => {
 
+  const {alertStore} = useContext(Context)
 
   return (
     <Snackbar
-      open = {isOpen}
-      autoHideDuration= {duration}
-      onClose={() => onClose()}>
-      <Alert onClose = {() => onClose()} severity = {severity}>{text}</Alert>
+      open = {alertStore.isOpen}>
+      <Alert  onClose = {() => alertStore.alertHide()} severity = {alertStore.type}>{alertStore.message}</Alert>
     </Snackbar>
   );
 }

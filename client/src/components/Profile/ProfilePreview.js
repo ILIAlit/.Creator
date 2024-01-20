@@ -1,9 +1,9 @@
 import { Instagram, Telegram } from "@mui/icons-material";
-import { Avatar, Box, Button, Link } from "@mui/material";
+import { Avatar, Box, Button, Link, Typography } from "@mui/material";
 
 
 
-const ProfilePreview = ({onClick, telegramLink, instagramLink}) => {
+const ProfilePreview = ({onClick, telegramLink, instagramLink, status, avatar, name}) => {
   return (
     <Box
       sx={{
@@ -15,11 +15,13 @@ const ProfilePreview = ({onClick, telegramLink, instagramLink}) => {
       component="form">
       <Avatar
         sx={{ width: 120, height: 120 }}
-        src={false}
+        src={avatar}
         size="large"
         variant="circle">
+      {name[0]}
       </Avatar>
       <Box maxWidth="xs" sx={{m:5}}>
+        <Typography variant='body2' gutterBottom>{status}</Typography>
         <Box sx={{display: 'flex', gap: 5}}>
           <Box sx={{ display: 'flex', alignItems: 'flex-end', alignItems: 'center', }}>
             <Instagram sx={{ color: 'action.active', mr: 1, my: 1.3 }} />

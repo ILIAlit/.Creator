@@ -1,6 +1,9 @@
 import axios from 'axios';
-import localStorageService from '../service/localStorageService';
-import { API_URL } from '../utils/consts';
+import localStorageService from '../service/tokenService';
+import { API_URL, LOGIN_ROUTE } from '../utils/consts';
+
+
+
 
 
 
@@ -20,7 +23,29 @@ const authRequestInterceptor = function(config) {
   return config;
 };
 
+const authResponseInterceptorSuccess = function(config) {
+  return config
+}
+
+const authResponseInterceptorError = function(error) {
+  if(error.response.status === 401) {
+    try {
+      localStorageService.removeToken()
+      // Сделать тут запрос 
+      // на обносление токена через реФрэш
+      window.location.href = LOGIN_ROUTE
+      return Promise.reject(error)
+    } catch(error) {
+      console.log("Не авторизован")
+    }
+  }
+  throw error
+}
+
+
+
 $authApi.interceptors.request.use(authRequestInterceptor);
+$authApi.interceptors.response.use(authResponseInterceptorSuccess,  authResponseInterceptorError)
 
 export {
   $api,

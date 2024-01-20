@@ -1,15 +1,15 @@
-import { Container, CssBaseline, createTheme, Box, Typography, Grid, TextField } from "@mui/material";
+import { Container, CssBaseline, createTheme, Box, Typography, Grid } from "@mui/material";
 import { Link } from 'react-router-dom'
 import { ThemeProvider } from "@emotion/react";
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationShema } from "./validation";
 import { useContext, useState } from "react";
 import { Context } from "../../context/index";
 import { HOME_ROUTE, LOGIN_ROUTE } from "../../utils/consts";
-import AlertMassage from "../../components/AlertMessage";
 import { useNavigate } from 'react-router-dom'
+import Input from "../../components/Input";
 
 
 const defaultTheme = createTheme();
@@ -37,10 +37,11 @@ const Registration = () => {
     setLoading(true)
     userStore.registration(name, email, password)
       .then((res) => {
-        if(!res) {
-          alertStore.setIsOpen(true)
+        if(res.error) {
+          alertStore.alertOpen(res.error, 'error')
         } else {
           navigate(HOME_ROUTE)
+          alertStore.alertOpen('Успешная регистрация', 'success')
         }
       })
       .finally(() => {
@@ -64,67 +65,51 @@ const Registration = () => {
           <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{mt: 3, mb: 10}}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Controller
+                <Input 
+                  id ="name" 
                   control={control}
-                  name="name"
-                  render={({field}) => (
-                    <TextField
-                      error = { !!errors.name?.message }
-                      helperText = {errors.name?.message}
-                      fullWidth
-                      label="Имя"
-                      onChange={(event) => {field.onChange(event)}}
-                      value={field.value}
-                      />
-                  )}
+                  name="name" 
+                  label="Имя" 
+                  variant="outlined" 
+                  type="text"
+                  error={!!errors.name?.message}
+                  helperText={errors.name?.message}
                 />
               </Grid>
               <Grid item xs={12}>
-                <Controller
-                  name="email"
-                  control={control} 
-                  render={({field}) => (
-                    <TextField
-                      error = {!!errors.email?.message}
-                      helperText = {errors.email?.message}
-                      fullWidth
-                      label="Почта"
-                      onChange={(event) => {field.onChange(event)}}
-                      value={field.value}
-                      />
-                  )}
+                <Input 
+                  id ="email" 
+                  control={control}
+                  name="email" 
+                  label="Почта" 
+                  variant="outlined" 
+                  type="text"
+                  error={!!errors.email?.message}
+                  helperText={errors.email?.message}
                 />
               </Grid>
               <Grid item xs={12}>
-                <Controller
+                <Input 
+                  id ="password" 
                   control={control}
                   name="password" 
-                  render={({field}) => (
-                    <TextField
-                      error = {!!errors.password?.message}
-                      helperText = {errors.password?.message}
-                      fullWidth
-                      label="Пароль"
-                      type="password"
-                      value={field.value}
-                      onChange={(event) => {field.onChange(event)}}/>
-                  )}
-                  />
+                  label="Пароль" 
+                  variant="outlined" 
+                  type="password"
+                  error={!!errors.password?.message}
+                  helperText={errors.password?.message}
+                />
               </Grid>
               <Grid item xs={12}>
-                <Controller
+                <Input 
+                  id ="confirmpassword" 
                   control={control}
                   name="confirmpassword" 
-                  render={({field}) => (
-                    <TextField
-                      error={!!errors.confirmpassword?.message}
-                      helperText={errors.confirmpassword?.message}
-                      fullWidth
-                      label="Повторите пароль"
-                      type="password"
-                      value={field.value}
-                      onChange={(event) => {field.onChange(event)}}/>
-                  )}
+                  label="Повторите пароль" 
+                  variant="outlined" 
+                  type="password"
+                  error={!!errors.confirmpassword?.message}
+                  helperText={errors.confirmpassword?.message}
                 />
               </Grid>
             </Grid>
@@ -147,7 +132,6 @@ const Registration = () => {
           </Box>
         </Box>
       </Container>
-      <AlertMassage duration = {20000} severity = 'error' text = {userStore.errorMess}/>
     </ThemeProvider>
   );
 }

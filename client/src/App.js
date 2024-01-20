@@ -1,24 +1,16 @@
 import { BrowserRouter } from "react-router-dom";
-import AppRouter from "./components/AppRouter";
-import Header from "./components/Header";
-import {observer} from 'mobx-react-lite'
-import { useContext, useEffect } from "react";
-import { Context } from "./context/index";
+import AppRouter from "./components/App/AppRouter";
+import Layout from "./components/App/Layout";
 
 function App() {
 
-  const {userStore} = useContext(Context)
-
-  useEffect(() => {
-    userStore.authCheck()
-  }, [])
-
   return (
     <BrowserRouter>
-      <Header />
-      <AppRouter />
+      <Layout>
+        <AppRouter />
+      </Layout>
     </BrowserRouter>
   );
 }
 
-export default observer(App);
+export default App;

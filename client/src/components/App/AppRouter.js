@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import { authRoutes, publicRoutes } from '../routes';
-import { HOME_ROUTE } from '../utils/consts';
+import { authRoutes, publicRoutes } from '../../routes';
+import { HOME_ROUTE } from '../../utils/consts';
+import { Context } from '../../context';
+import { observer } from 'mobx-react-lite'
 
 const AppRouter = () => {
-  const isAuth = true
+
+  const {userStore} = useContext(Context)
+  const {isAuth} = userStore
+
+  
+
   return (
     <Routes>
       {isAuth && (
@@ -16,4 +23,4 @@ const AppRouter = () => {
   );
 }
 
-export default AppRouter;
+export default observer(AppRouter);

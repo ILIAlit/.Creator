@@ -1,13 +1,12 @@
 import { ThemeProvider } from "@emotion/react";
-import { Box, Container, CssBaseline, createTheme, Typography, Grid, TextField } from "@mui/material";
+import { Box, Container, CssBaseline, createTheme, Typography, Grid } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationShema } from "./validation";
 import { useContext, useState } from "react";
 import {Context}  from '../../context/index';
 import { HOME_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
-import AlertMessage from "../../components/AlertMessage";
 import { useNavigate, Link } from 'react-router-dom'
 import Input from "../../components/Input";
 
@@ -15,13 +14,11 @@ const defaultTheme = createTheme();
 
 const Login = () => {
   const navigate = useNavigate();
-  const {userStore} = useContext(Context)
-  const [alertOpen, setAlertOpen] = useState(false)
+  const {userStore, alertStore} = useContext(Context)
   const [loading, setLoading] = useState(false)
 
-  console.log(userStore.error)
 
-  const {control, handleSubmit } = useForm({
+  const {control, handleSubmit, formState: {errors} } = useForm({
     resolver: yupResolver(validationShema),
   })
 
@@ -29,18 +26,16 @@ const Login = () => {
     setLoading(true)
     userStore.login(name, password)
       .then((res) => {
-        if(!res) {
-          setAlertOpen(true)
+        if(res.error) {
+          alertStore.alertOpen(res.error, 'error')
         } else {
           navigate(HOME_ROUTE)
+          alertStore.alertOpen('Успешная авторизация', 'success')
         }
       })
       .finally(() => setLoading(false))
   };
 
-  const alertClose = () => {
-    setAlertOpen(false)
-  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -65,7 +60,9 @@ const Login = () => {
                     name="name" 
                     label="Имя" 
                     variant="outlined" 
-                    type="text"   
+                    type="text"
+                    error={!!errors.name?.message}
+                    helperText={errors.name?.message}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -75,7 +72,10 @@ const Login = () => {
                   name="password" 
                   label="Пароль" 
                   variant="outlined" 
-                  type="text"  />
+                  type="password" 
+                  error={!!errors.password?.message}
+                  helperText={errors.password?.message} 
+                />
                 </Grid>
               </Grid>
               <LoadingButton
@@ -97,12 +97,6 @@ const Login = () => {
             </Box>
           </Box>
       </Container>
-      <AlertMessage 
-        isOpen={alertOpen} 
-        onClose={alertClose} 
-        duration = {2000} 
-        severity = 'error' 
-        text = {userStore.error.errorMess} />
     </ThemeProvider>
   );
 }
