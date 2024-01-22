@@ -31,9 +31,9 @@ const authResponseInterceptorError = function(error) {
   if(error.response.status === 401) {
     try {
       localStorageService.removeToken()
+      window.location.href = LOGIN_ROUTE
       // Сделать тут запрос 
       // на обносление токена через реФрэш
-      window.location.href = LOGIN_ROUTE
       return Promise.reject(error)
     } catch(error) {
       console.log("Не авторизован")

@@ -1,7 +1,7 @@
 import { Snackbar, Alert } from "@mui/material";
 import {observer} from 'mobx-react-lite'
 import { useContext } from "react";
-import { Context } from "../context";
+import { Context } from "../../context";
 
 const AlertMassage = () => {
 

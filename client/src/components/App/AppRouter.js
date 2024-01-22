@@ -14,7 +14,7 @@ const AppRouter = () => {
 
   return (
     <Routes>
-      {isAuth && (
+      {!isAuth && (
         authRoutes.map(({path, Component}) => <Route path={path} element={Component} key={path} />)
       )}
       {publicRoutes.map(({path, Component}) => <Route path={path} element={Component} key={path} />)}

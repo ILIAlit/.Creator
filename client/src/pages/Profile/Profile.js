@@ -1,10 +1,10 @@
 import { Box, Button, Container, CssBaseline, ThemeProvider, Typography, createTheme } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { Context } from "../context";
+import { Context } from "../../context";
 import { observer } from 'mobx-react-lite'
-import ProfileCreateForm from "../components/Profile/ProfileCreateForm";
-import ProfilePreview from "../components/Profile/ProfilePreview";
-import Loader from "../components/Loader";
+import ProfileCreateForm from "../../components/Profile/ProfileCreateForm";
+import ProfilePreview from "../../components/Profile/ProfilePreview";
+import Loader from "../../components/UI/Loader";
 
 const defaultTheme = createTheme();
 

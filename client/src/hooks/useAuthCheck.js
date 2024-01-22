@@ -11,6 +11,8 @@ export function useAuthCheck() {
           alertStore.alertOpen(res.error, 'info')
         }
       })
+    } else {
+      alertStore.alertOpen("Авторизуйтесь для доступа ко всем функциям", 'info')
     }
   }, [])
 }

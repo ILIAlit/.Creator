@@ -4,9 +4,9 @@ import { LoadingButton } from "@mui/lab";
 import SaveIcon from '@mui/icons-material/Save';
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import AvatarForm from "./AvatarForm";
-import Input from "../Input";
+import Input from "../UI/Input";
 import { Context } from "../../context/index"
+import ImageForm from "../UI/ImageForm";
 
 
 
@@ -50,7 +50,7 @@ const FormProfile = ({onSave}) => {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <AvatarForm register={register}/>
+      <ImageForm variant='square' register={register}/>
       <Box maxWidth="xs">
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
           <Input control={control} name="status" label="Статус" variant="outlined" id ="status" type="text"  />

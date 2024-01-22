@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 
-const AvatarForm = ({register}) => {
+const ImageForm = ({register, variant, width, height}) => {
 
   const [avatar, setAvatar] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
@@ -40,10 +40,10 @@ const AvatarForm = ({register}) => {
   return (
     <Tooltip title = {!avatarUrl ? "Выберите изображение" : "Удалить"} >
       <Avatar
-        sx={{ width: 120, height: 120 }}
+        sx={{ width: width, height: height }}
         src={avatarUrl}
         size="large"
-        variant="circle"
+        variant={variant}
         onClick = {removeCover}>
         <IconButton
           component="label"
@@ -62,4 +62,4 @@ const AvatarForm = ({register}) => {
   );
 }
 
-export default AvatarForm;
+export default ImageForm;

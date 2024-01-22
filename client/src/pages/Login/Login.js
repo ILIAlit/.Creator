@@ -8,7 +8,7 @@ import { useContext, useState } from "react";
 import {Context}  from '../../context/index';
 import { HOME_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
 import { useNavigate, Link } from 'react-router-dom'
-import Input from "../../components/Input";
+import Input from "../../components/UI/Input";
 
 const defaultTheme = createTheme();
 

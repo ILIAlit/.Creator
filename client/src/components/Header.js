@@ -5,7 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Context } from '../context/index';
-import { HOME_ROUTE, LOGIN_ROUTE } from "../utils/consts";
+import { CREATE_PUBLICATION_ROUTE, HOME_ROUTE, LOGIN_ROUTE } from "../utils/consts";
 import { observer } from 'mobx-react-lite';
 
 const Search = styled('div')(({ theme }) => ({
@@ -152,17 +152,17 @@ const Header = () => {
               variant="text"
               onClick={() => {
                 handleCloseNavMenu();
-                navigate("/")
+                navigate(HOME_ROUTE)
                 }}
               sx={{ my: 2, color: 'white', display: 'block', textDecoration: 'none' }}>
                 Главная
             </Button>
-            {isAuth && (
+            {!isAuth && (
               <Button
               variant="text"
               onClick={() => {
                 handleCloseNavMenu();
-                navigate("/publ-create-tool");}}
+                navigate(CREATE_PUBLICATION_ROUTE);}}
                 sx={{ my: 2, color: 'white', display: 'block', textDecoration: 'none' }}>
                   Создать
               </Button>

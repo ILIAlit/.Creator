@@ -12,7 +12,7 @@ class UserController {
       next(error);
     };
   };
-
+  
   async login(req, res, next) {
     try {
       const {name, password} = req.body;
@@ -22,6 +22,7 @@ class UserController {
       next(error);
     }
   };
+
   async check(req, res, next) {
     try {
       const newAccessToken = await userService.check(req.user)

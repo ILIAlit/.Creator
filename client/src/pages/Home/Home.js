@@ -18,7 +18,7 @@ const Home = () => {
             component="h1"
             variant="h2"
             align="center"
-            color="text.primary"
+            color="textPrimary"
             gutterBottom>
             Библиотека
           </Typography>
