@@ -1,25 +1,24 @@
-const sequelize = require('../db');
-const { DataTypes } = require('sequelize');
+const Profile = require('./profileModel');
+const Publication = require('./publicationModel');
+const PublicationTag = require('./publicationTagModel');
+const Tag = require('./tagModel');
+const User = require('./userModel');
 
-const User = sequelize.define('user', {
-  id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
-  name: {type: DataTypes.STRING, allowNull: false, unique: true},
-  email: {type:DataTypes.STRING, allowNull: false},
-  password: {type:DataTypes.STRING},
-});
-
-const Profile = sequelize.define('profile', {
-  id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
-  avatar: {type: DataTypes.STRING},
-  instagramLink: {type: DataTypes.STRING},
-  telegramLink: {type: DataTypes.STRING},
-  status: {type: DataTypes.STRING},
-});
 
 User.hasOne(Profile);
 Profile.belongsTo(User);
 
+User.hasMany(Publication)
+Publication.belongsTo(User)
+
+Publication.belongsToMany(Tag, {through: PublicationTag})
+Tag.belongsToMany(Publication, {through: PublicationTag})
+
+
 module.exports = {
   User,
-  Profile
+  Publication,
+  Profile,
+  Tag,
+  PublicationTag
 };
