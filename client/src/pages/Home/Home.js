@@ -1,5 +1,6 @@
-import { Box, Container, CssBaseline, Grid, ThemeProvider, Typography, createTheme } from '@mui/material';
+import { Box, Container, CssBaseline, ImageList, ThemeProvider, Typography, createTheme } from '@mui/material';
 
+import ImageItem from '../../components/UI/ImageItem';
 
 const defaultTheme = createTheme();
 
@@ -10,8 +11,8 @@ const Home = () => {
       <CssBaseline />
       <Box
       sx={{
-        pt: 8,
-        pb: 6,
+        pt: 4,
+        pb: 5,
       }}>
         <Container component="main"  maxWidth="sm">
           <Typography
@@ -24,17 +25,66 @@ const Home = () => {
           </Typography>
         </Container>
       </Box>
-      <Container sx={{py: 8}} maxWidth="xl">
-        {/* <Grid container spacing={2}>
-          {cards.map((card, index) => (
-            <Grid item key={card} xs={12} sm={6} md={4} >
-              <Publication img={images[index]}/>
-            </Grid>
+      <Container maxWidth="xl">
+        <ImageList variant="masonry" cols={3} gap={8}>
+          {itemData.map((item) => (
+            <ImageItem title={item.title} image={item.img} author='ILIA' />
           ))}
-        </Grid> */}
+        </ImageList>
       </Container>
     </ThemeProvider>
   );
 }
 
 export default Home;
+
+const itemData = [
+  {
+    img: 'https://images.unsplash.com/photo-1549388604-817d15aa0110',
+    title: 'Bed',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1525097487452-6278ff080c31',
+    title: 'Books',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6',
+    title: 'Sink',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
+    title: 'Kitchen',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1588436706487-9d55d73a39e3',
+    title: 'Blinds',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1574180045827-681f8a1a9622',
+    title: 'Chairs',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1530731141654-5993c3016c77',
+    title: 'Laptop',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1481277542470-605612bd2d61',
+    title: 'Doors',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7',
+    title: 'Coffee',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee',
+    title: 'Storage',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1597262975002-c5c3b14bbd62',
+    title: 'Candle',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4',
+    title: 'Coffee table',
+  },
+];

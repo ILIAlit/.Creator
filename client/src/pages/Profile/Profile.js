@@ -1,10 +1,11 @@
-import { Box, Button, Container, CssBaseline, ThemeProvider, Typography, createTheme } from "@mui/material";
+import { Box, Container, CssBaseline, ThemeProvider, Typography, createTheme } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../context";
 import { observer } from 'mobx-react-lite'
-import ProfileCreateForm from "../../components/Profile/ProfileCreateForm";
-import ProfilePreview from "../../components/Profile/ProfilePreview";
+import ProfileCreateForm from "../../components/ProfileForm/ProfileCreateForm";
+import ProfilePreview from "../../components/ProfilePreview/ProfilePreview";
 import Loader from "../../components/UI/Loader";
+import ButtonCreateProfile from "../../components/UI/ButtonCreateProfile";
 
 const defaultTheme = createTheme();
 
@@ -13,12 +14,10 @@ const Profile = () => {
   const {profileStore} = useContext(Context)
   const {profile, isProfile, loading} = profileStore
   const {avatar, instagramLink, telegramLink, status} = profile
-
+  const [previewVisible, setPreviewVisible] = useState(true);
+  
   const {userStore: {user}} = useContext(Context)
   const {name} = user
-
-
-  const [previewVisible, setPreviewVisible] = useState(true);
 
   useEffect(() => {
     profileStore.getProfile()
@@ -58,14 +57,7 @@ const Profile = () => {
           }}>
           <Typography component="h1" variant="h3" sx={{mb: 3}}>Привет, {name}</Typography>
           {!isProfile ? 
-            <Box>
-              <Button
-                onClick={() => createProfile()}
-                variant="contained"
-                sx={{ mt: 5, mb: 3, fontSize: '16px'  }}>
-                Создать профиль!
-              </Button>
-            </Box> :
+            <ButtonCreateProfile createProfile={createProfile} /> :
             <Box>
               {previewVisible ? 
                 <ProfilePreview
