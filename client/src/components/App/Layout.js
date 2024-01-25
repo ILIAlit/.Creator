@@ -1,16 +1,27 @@
-import Header from "../Header";
+import Header from "../Header/Header";
 import AlertMessage from "../UI/AlertMessage";
 import {observer} from 'mobx-react-lite'
 import { useAuthCheck } from "../../hooks/useAuthCheck";
+import { useContext } from "react";
+import { Context } from "../../context";
+import Loader from "../UI/Loader";
 
 
 const Layout = ({children}) => {
-
+  
+  const {userStore: {loading, isAuth, user}} = useContext(Context)
   useAuthCheck()
+
+
+  if(loading.isLoading) {
+    return (
+      <Loader />
+    )
+  }
 
   return (
     <div>
-      <Header />
+      <Header isAuth={isAuth} user={user} />
         {children}
       <AlertMessage />
     </div>

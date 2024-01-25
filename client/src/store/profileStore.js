@@ -1,13 +1,16 @@
 import { makeAutoObservable } from 'mobx'
 import ProfileService from '../service/profileService'
+import LoadingStore from './loadingStore'
 
 
 export default class ProfileStore {
   _profile = {}
   _isProfile = false
+  loading
 
   constructor() {
     makeAutoObservable(this)
+    this.loading = new LoadingStore()
   }
 
   setProfile(profile) {
@@ -27,6 +30,7 @@ export default class ProfileStore {
   }
 
   async createProfile(profileData) {
+    this.loading.setIsLoading(true)
     try {
       const response = await ProfileService.createProfile(profileData)
       if(response) {
@@ -36,10 +40,13 @@ export default class ProfileStore {
       return response
     } catch({response: {data}}) {
       return {error: data.message}
+    } finally {
+      this.loading.setIsLoading(false)
     }
   }
 
   async getProfile() {
+    this.loading.setIsLoading(true)
     try {
       const response = await ProfileService.getProfile()
       if(response) {
@@ -50,6 +57,8 @@ export default class ProfileStore {
       return response
     } catch({response: {data}}) {
       return {error: data.message}
+    } finally {
+      this.loading.setIsLoading(false)
     }
   }
 }

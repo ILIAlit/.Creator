@@ -1,5 +1,5 @@
 import { Instagram, Telegram } from "@mui/icons-material";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import SaveIcon from '@mui/icons-material/Save';
 import { useContext, useState } from "react";
@@ -23,7 +23,7 @@ const FormProfile = ({onSave}) => {
       formData.append('instagramLink', data.instagramLink)
       formData.append('telegramLink', data.telegramLink)
       formData.append('status', data.status)
-      // formData.append('avatar', data.avatar[0])
+      formData.append('avatar', data.avatar[0])
       profileStore.createProfile(formData)
         .then((res) => {
           if(res.error) {
@@ -39,6 +39,7 @@ const FormProfile = ({onSave}) => {
   };
 
 
+
   return (
     <Box
       sx={{
@@ -50,9 +51,9 @@ const FormProfile = ({onSave}) => {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <ImageForm variant='square' register={register}/>
-      <Box maxWidth="xs">
-        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+      <ImageForm register={register} name='avatar' variant='circle' width='160px' height='160px' />
+      <Box maxWidth="xs" sx={{mt:2}}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', mb:2 }}>
           <Input control={control} name="status" label="Статус" variant="outlined" id ="status" type="text"  />
         </Box>
         <Box sx={{display: 'flex', gap: 2}}>
@@ -65,16 +66,24 @@ const FormProfile = ({onSave}) => {
             <Input control={control} name="telegramLink" label="Телеграм" variant="standard" id ="telegram" type="text"  />
           </Box>
         </Box>
-        <LoadingButton
-            type="submit"
+        <Box sx={{display:'flex',gap:2}}>
+          <LoadingButton
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 5, mb: 3, fontSize: '16px'  }}
+              loadingPosition="start"
+              startIcon={<SaveIcon/>}
+              loading={loading}>
+              Сохранить
+          </LoadingButton>
+          <Button
+            onClick={() => onSave()}
             fullWidth
-            variant="contained"
             sx={{ mt: 5, mb: 3, fontSize: '16px'  }}
-            loadingPosition="start"
-            startIcon={<SaveIcon/>}
-            loading={loading}>
-            Сохранить
-        </LoadingButton>
+          >Отмена
+          </Button>
+        </Box>
       </Box>
 </Box>
   );

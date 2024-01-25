@@ -11,7 +11,7 @@ const defaultTheme = createTheme();
 const Profile = () => {
 
   const {profileStore} = useContext(Context)
-  const {profile, isProfile} = profileStore
+  const {profile, isProfile, loading} = profileStore
   const {avatar, instagramLink, telegramLink, status} = profile
 
   const {userStore: {user}} = useContext(Context)
@@ -19,13 +19,10 @@ const Profile = () => {
 
 
   const [previewVisible, setPreviewVisible] = useState(true);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true)
     profileStore.getProfile()
       .then((res) => console.log(res))
-      .finally(() => setLoading(false))
   }, [])
 
   const onClosePreview = () => {
@@ -42,7 +39,7 @@ const Profile = () => {
   }
 
 
-  if(loading) {
+  if(loading.isLoading) {
     return (
       <Loader />
     )
@@ -51,7 +48,7 @@ const Profile = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
-      <Container component="main" maxWidth = "sx">
+      <Container sx={{mb:10}} component="main" maxWidth = "sx">
         <Box
           sx={{
             p:5,

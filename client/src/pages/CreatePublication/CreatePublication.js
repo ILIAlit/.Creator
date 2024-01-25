@@ -1,18 +1,42 @@
 import { ThemeProvider } from "@emotion/react";
-import { Avatar, Box, Button, ButtonBase, Container, CssBaseline, Grid, Paper, TextField, Typography, createTheme } from "@mui/material";
+import { Button, Container, CssBaseline, Grid, Paper, Typography, createTheme } from "@mui/material";
 import Input from "../../components/UI/Input";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
 import ImageForm from "../../components/UI/ImageForm";
-import ChipSelect from "../../components/UI/ChipSelect";
+import ChipSelect from "../../components/UI/TagSelect";
+import { yupResolver } from "@hookform/resolvers/yup"
+import { schema } from "./validation";
+import InputMultiLine from "../../components/UI/InputMultiLine";
+import { useContext, useState } from "react";
+import { Context } from '../../context/index'
 
 const defaultTheme = createTheme()
 
 
 const CreatePublication = () => {
 
+  const [publTag, setPublTag] = useState([]);
+  const {publicationStore} = useContext(Context)
 
-  const {control, handleSubmit, register} = useForm()
+  const {
+    control, 
+    handleSubmit, 
+    register, 
+    formState: {errors}
+  } = useForm({
+    resolver: yupResolver(schema)
+  })
+
+  const onSubmit = (data) => {
+    data.tags = publTag
+    const formData = new FormData()
+    formData.append('title', data.title)
+    formData.append('description', data.description)
+    formData.append('image', data.image[0])
+    formData.append('link', data.link)
+    formData.append('tags', JSON.stringify(publTag))
+    publicationStore.createPublication(formData)
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -25,19 +49,50 @@ const CreatePublication = () => {
           gutterBottom
         >Создание публикации</Typography>
         <Paper elevation={5} sx={{p:3, mt:3, pb:6}}>
-          <Grid sx={{justifyContent:"center"}} component='form' container spacing={5}>
+          <Grid onSubmit={handleSubmit(onSubmit)} sx={{justifyContent:"center"}} component='form' container spacing={5}>
             <Grid sx={{display:'flex', alignItems:'center', justifyContent:'center',}} item>
-              <ImageForm variant='square' register={register} width='300px' height='300px' />
+              <ImageForm name='image' variant='square' register={register} width='300px' height='300px' />
             </Grid>
             <Grid sx={{justifyContent:"center"}} xs={12}  item sm container>
-              <Grid item direction='column'>
-                <TextField placeholder="Название" fullWidth sx={{mb:3}}  />
-                <TextField multiline placeholder="Описание" fullWidth sx={{mb:2}} />
-                <ChipSelect />
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Input 
+                    id='title'
+                    type='text'
+                    label='Название'
+                    name='title'
+                    error={!!errors.title?.message}
+                    helperText={errors.title?.message}
+                    control={control} />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputMultiLine 
+                    id='description'
+                    type='text'
+                    label='Описание'
+                    control={control}
+                    name='description'
+                    error={!!errors.description?.message}
+                    helperText={errors.description?.message}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <InputMultiLine 
+                    id='link'
+                    type='text'
+                    label='Ссылка'
+                    control={control}
+                    name='link'
+                    error={!!errors.description?.message}
+                    helperText={errors.description?.message}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <ChipSelect publTag={publTag} setPublTag={setPublTag} />
+                </Grid>
               </Grid>
-              <Button sx={{width: '250px', height: '50px', mt: 5}} fullWidth variant='contained'>Сохранить</Button>
+              <Button type='submit' sx={{width: '250px', height: '50px', mt: 5}} fullWidth variant='contained'>Сохранить</Button>
             </Grid>
-
           </Grid>
         </Paper>
       </Container>

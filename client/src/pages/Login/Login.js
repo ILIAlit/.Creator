@@ -4,18 +4,19 @@ import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationShema } from "./validation";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import {Context}  from '../../context/index';
 import { HOME_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
 import { useNavigate, Link } from 'react-router-dom'
 import Input from "../../components/UI/Input";
+import {observer} from 'mobx-react-lite'
 
 const defaultTheme = createTheme();
 
 const Login = () => {
   const navigate = useNavigate();
   const {userStore, alertStore} = useContext(Context)
-  const [loading, setLoading] = useState(false)
+  const {loading} = userStore
 
 
   const {control, handleSubmit, formState: {errors} } = useForm({
@@ -23,7 +24,6 @@ const Login = () => {
   })
 
   const onSubmit = async ({name, password}) => {
-    setLoading(true)
     userStore.login(name, password)
       .then((res) => {
         if(res.error) {
@@ -33,7 +33,6 @@ const Login = () => {
           alertStore.alertOpen('Успешная авторизация', 'success')
         }
       })
-      .finally(() => setLoading(false))
   };
 
 
@@ -83,7 +82,7 @@ const Login = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 5, mb: 3, fontSize: '16px'  }}
-                loading={loading}
+                loading={loading.isLoading}
                 loadingIndicator="Загрузка…">
                 Войти
               </LoadingButton>
@@ -101,4 +100,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default observer(Login);

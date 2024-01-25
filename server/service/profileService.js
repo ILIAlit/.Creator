@@ -1,11 +1,13 @@
 const Profile = require("../data/repositories/profileRepository")
 const User = require("../data/repositories/userRepository")
 const ApiError = require("../error/ApiError")
+const imageUploadService = require("./imageUploadService")
+
 
 
 
 class ProfileService {
-  async getProfile({name}) {
+  async getProfile(name) {
     const user = await User.findOne(name)
     const userProfile = await Profile.get(user)
     if(!userProfile) {
@@ -16,8 +18,8 @@ class ProfileService {
     }
   }
 
-  async createProfile({name}, {instagramLink, telegramLink, status}) {
-    const avatar = "Аватар!!!"
+  async createProfile(name, instagramLink, telegramLink, status, avatarFile) {
+    const avatar = await imageUploadService.uploadCloudImage(avatarFile)
     const user = await User.findOne(name)
     const isProfile = await Profile.get(user)
     if(isProfile) {

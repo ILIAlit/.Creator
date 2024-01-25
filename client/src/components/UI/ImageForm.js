@@ -1,60 +1,40 @@
 import { PhotoCamera } from "@mui/icons-material";
 import { Avatar, IconButton, Tooltip } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 
-const ImageForm = ({register, variant, width, height}) => {
+const ImageForm = ({name ,register, variant, width, height}) => {
 
-  const [avatar, setAvatar] = useState(null);
-  const [avatarUrl, setAvatarUrl] = useState(null);
+  const [userAvatar, setUserAvatar] = useState(null);
+
 
   const handleAvatarChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        alert("Файл слишком большой. Выберите файл размером не более 5 МБ.");
-      } else if (!file.type.startsWith("image/")) {
-        alert("Файл не является изображением. Выберите файл изображения.");
-      } else {
-        setAvatar(file);
-      }
-    }
+    setUserAvatar(URL.createObjectURL(event.target.files[0]));
   };
 
   const removeCover = () => {
-    setAvatar(null);
-    setAvatarUrl(null);
+    setUserAvatar(null);
   };
-
-  useEffect(() => {
-    if (avatar) {
-      const url = URL.createObjectURL(avatar);
-      setAvatarUrl(url);
-      return () => URL.revokeObjectURL(url);
-    }
-  }, [avatar]);
-
 
 
   return (
-    <Tooltip title = {!avatarUrl ? "Выберите изображение" : "Удалить"} >
+    <Tooltip title = {!userAvatar ? "Выберите изображение" : "Удалить"} >
       <Avatar
         sx={{ width: width, height: height }}
-        src={avatarUrl}
+        src={userAvatar}
         size="large"
         variant={variant}
         onClick = {removeCover}>
         <IconButton
           component="label"
+          onChange={handleAvatarChange}
           color="primary">
           <PhotoCamera />
           <input 
-            {...register('avatar')}
+            {...register(name)}
             type="file"
             accept="image/*"
             hidden
-            onChange={handleAvatarChange}
           />
         </IconButton>
       </Avatar>

@@ -4,8 +4,8 @@ const profileService = require("../service/profileService");
 class ProfileController {
   async getProfile(req, res, next) {
     try {
-      const userReq = req.user
-      const profile = await profileService.getProfile(userReq)
+      const {name} = req.user
+      const profile = await profileService.getProfile(name)
       return res.json(profile);
     } catch(error) {
       next(error);
@@ -13,9 +13,10 @@ class ProfileController {
   };
   async createProfile(req, res, next) {
     try {
-      const userReq = req.user
-      const profileReq = req.body
-      const profile = await profileService.createProfile(userReq, profileReq)
+      const {instagramLink, telegramLink, status} = req.body
+      const {name} = req.user
+      const {avatar:avatarFile} = req.files
+      const profile = await profileService.createProfile(name, instagramLink, telegramLink, status, avatarFile)
       return res.json(profile);
     } catch(error) {
       next(error);

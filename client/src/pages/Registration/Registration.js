@@ -5,11 +5,12 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationShema } from "./validation";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Context } from "../../context/index";
 import { HOME_ROUTE, LOGIN_ROUTE } from "../../utils/consts";
 import { useNavigate } from 'react-router-dom'
 import Input from "../../components/UI/Input";
+import {observer} from 'mobx-react-lite'
 
 
 const defaultTheme = createTheme();
@@ -17,8 +18,8 @@ const defaultTheme = createTheme();
 const Registration = () => {
 
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
   const {userStore, alertStore} = useContext(Context);
+  const {loading} = userStore
 
   console.log(userStore)
   
@@ -34,7 +35,6 @@ const Registration = () => {
   });
 
   const onSubmit = ({name, email, password}) => {
-    setLoading(true)
     userStore.registration(name, email, password)
       .then((res) => {
         if(res.error) {
@@ -44,9 +44,6 @@ const Registration = () => {
           alertStore.alertOpen('Успешная регистрация', 'success')
         }
       })
-      .finally(() => {
-        setLoading(false)
-      });
   };
 
   return (
@@ -116,7 +113,7 @@ const Registration = () => {
             <LoadingButton
               type="submit"
               fullWidth
-              loading={loading}
+              loading={loading.isLoading}
               loadingIndicator="Загрузка…"
               variant="contained"
               sx={{ mt: 5, mb: 3, fontSize: '16px'  }}>
@@ -136,4 +133,4 @@ const Registration = () => {
   );
 }
 
-export default Registration;
+export default observer(Registration);

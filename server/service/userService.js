@@ -49,7 +49,7 @@ class UserService {
   };
 
   async check(userData) {
-    const userDto = new UserDto(userData)
+    const userDto = new UserDto(userData, userData.avatar)
     const token = tokenService.generateToken({...userDto})
     return {
       token,
