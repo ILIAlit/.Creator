@@ -9,7 +9,7 @@ import Loader from "../UI/Loader";
 
 const Layout = ({children}) => {
   
-  const {userStore: {loading, isAuth, user}} = useContext(Context)
+  const {userStore: {loading, isAuth, user, logout}} = useContext(Context)
   useAuthCheck()
 
 
@@ -21,7 +21,7 @@ const Layout = ({children}) => {
 
   return (
     <div>
-      <Header isAuth={isAuth} user={user} />
+      <Header isAuth={isAuth} user={user} logout={logout} />
         {children}
       <AlertMessage />
     </div>

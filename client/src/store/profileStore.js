@@ -1,64 +1,67 @@
-import { makeAutoObservable } from 'mobx'
-import ProfileService from '../service/profileService'
-import LoadingStore from './loadingStore'
-
+import { makeAutoObservable } from 'mobx';
+import ProfileService from '../service/profileService';
+import LoadingStore from './loadingStore';
 
 export default class ProfileStore {
-  _profile = {}
-  _isProfile = false
-  loading
+	_profile = {};
+	_isProfile = false;
+	loading;
 
-  constructor() {
-    makeAutoObservable(this)
-    this.loading = new LoadingStore()
-  }
+	constructor() {
+		makeAutoObservable(this);
+		this.loading = new LoadingStore();
+	}
 
-  setProfile(profile) {
-    this._profile = profile
-  }
+	setProfile(profile) {
+		this._profile = profile;
+	}
 
-  setIsProfile(bool) {
-    this._isProfile = bool
-  }
+	setIsProfile(bool) {
+		this._isProfile = bool;
+	}
 
-  get profile() {
-    return this._profile
-  }
+	get profile() {
+		return this._profile;
+	}
 
-  get isProfile() {
-    return this._isProfile
-  }
+	get isProfile() {
+		return this._isProfile;
+	}
 
-  async createProfile(profileData) {
-    this.loading.setIsLoading(true)
-    try {
-      const response = await ProfileService.createProfile(profileData)
-      if(response) {
-        const {data: {userProfile}} = response
-        this.setProfile(userProfile)
-      }
-      return response
-    } catch({response: {data}}) {
-      return {error: data.message}
-    } finally {
-      this.loading.setIsLoading(false)
-    }
-  }
+	async createProfile(profileData) {
+		this.loading.setIsLoading(true);
+		try {
+			const response = await ProfileService.createProfile(profileData);
+			if (response) {
+				const {
+					data: { userProfile },
+				} = response;
+				this.setProfile(userProfile);
+			}
+			return response;
+		} catch ({ response: { data } }) {
+			return { error: data.message };
+		} finally {
+			this.loading.setIsLoading(false);
+		}
+	}
 
-  async getProfile() {
-    this.loading.setIsLoading(true)
-    try {
-      const response = await ProfileService.getProfile()
-      if(response) {
-        const {data: {userProfile}} = response
-        this.setProfile(userProfile)
-        this.setIsProfile(true)
-      }
-      return response
-    } catch({response: {data}}) {
-      return {error: data.message}
-    } finally {
-      this.loading.setIsLoading(false)
-    }
-  }
+	async getProfile() {
+		this.loading.setIsLoading(true);
+		try {
+			const response = await ProfileService.getProfile();
+			if (response) {
+				const {
+					data: { userProfile },
+				} = response;
+				this.setProfile(userProfile);
+				this.setIsProfile(true);
+			}
+			return response;
+		} catch ({ response: { data } }) {
+			return { error: data.message };
+		} finally {
+			this.loading.setIsLoading(false);
+		}
+	}
 }

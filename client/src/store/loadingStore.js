@@ -1,18 +1,17 @@
-import { makeAutoObservable } from "mobx"
-
+import { makeAutoObservable } from 'mobx';
 
 export default class LoadingStore {
-  _isLoading = false
+	_isLoading = false;
 
-  constructor() {
-    makeAutoObservable(this)
-  }
+	constructor() {
+		makeAutoObservable(this);
+	}
 
-  setIsLoading(bool) {
-    this._isLoading = bool
-  }
+	setIsLoading(bool) {
+		this._isLoading = bool;
+	}
 
-  get isLoading() {
-    return this._isLoading
-  }
+	get isLoading() {
+		return this._isLoading;
+	}
 }
