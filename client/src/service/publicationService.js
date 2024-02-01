@@ -8,4 +8,11 @@ export default class PublicationService {
 			console.log(error);
 		}
 	}
+	static async getPublications(tagId, limit, page) {
+		try {
+			return $authApi.get('publication/', {params: {tagId, limit, page}});
+		} catch (error) {
+			console.log(error);
+		}
+	}
 }

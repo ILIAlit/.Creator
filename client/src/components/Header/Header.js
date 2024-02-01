@@ -42,8 +42,10 @@ const Header = ({ isAuth, user, logout }) => {
 		navigate(HOME_ROUTE);
 	};
 
+	console.log("HEADER")
+
 	return (
-		<AppBar position="fix" className="appBar">
+		<AppBar sx={{position:'fixed',}} className="appBar">
 			<CssBaseline />
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>

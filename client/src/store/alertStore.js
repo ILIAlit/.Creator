@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 
 export default class AlertStore {
 	_isOpen = false;
-	_type = '';
+	_type = 'info';
 	_message = '';
 	_delay = 3000;
 
@@ -39,9 +39,7 @@ export default class AlertStore {
 	}
 
 	alertHide() {
-		this.setMessage('');
 		this.setIsOpen(false);
-		this.setType('');
 	}
 
 	alertOpen(message, type) {
