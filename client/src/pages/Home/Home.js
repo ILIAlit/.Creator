@@ -56,7 +56,7 @@ const Home = () => {
 		setPage(page + 1);
 	}
 
-	console.log(lastElement);
+	console.log(publications);
 
 	return (
 		<ThemeProvider theme={defaultTheme}>
@@ -99,7 +99,7 @@ const Home = () => {
 									ref={lastElement}
 									key={item.id}
 									title={item.title}
-									image={item.image}
+									src={item.image}
 									author="Автор"
 								/>
 							);
@@ -108,7 +108,7 @@ const Home = () => {
 							<ImageItem
 								key={item.id}
 								title={item.title}
-								image={item.image}
+								src={item.image}
 								author="Автор"
 							/>
 						);

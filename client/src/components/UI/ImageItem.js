@@ -1,17 +1,27 @@
 import { Box, ImageListItem, ImageListItemBar } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
+import { Blurhash } from 'react-blurhash';
 
-const ImageItem = forwardRef(({ image, title, author }, ref) => {
+const ImageItem = forwardRef(({ src, title, author }, ref) => {
+	const [loaded, setLoaded] = useState(false);
+
+	const handleImageLoad = () => {
+		setLoaded(true);
+	};
+
 	return (
-		<ImageListItem ref={ref} key={image} sx={{ minHeight: '300px' }}>
-			<img
-				srcSet={`${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-				src={`${image}?w=248&fit=crop&auto=format`}
-				alt={title}
-				loading="lazy"
-			/>
+		<ImageListItem ref={ref} key={src} sx={{ minHeight: '300px' }}>
+			{
+				<img
+					srcSet={src}
+					src={src}
+					alt={title}
+					onLoad={handleImageLoad}
+					style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.5s' }}
+				/>
+			}
 			<ImageListItemBar
 				sx={{ p: 1, pr: 3 }}
 				title={title}

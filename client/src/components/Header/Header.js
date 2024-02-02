@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
 	AppBar,
 	Box,
@@ -23,11 +23,13 @@ import {
 import { observer } from 'mobx-react-lite';
 import BurgerMenu from '../UI/BurgerMenu';
 import SearchInput from '../UI/SearchInput';
+import { Context } from '../../context/index'
 
 const Header = ({ isAuth, user, logout }) => {
 	const navigate = useNavigate();
 
 	const [anchorElUser, setAnchorElUser] = useState(null);
+	const {userStore} = useContext(Context)
 
 	const handleOpenUserMenu = (event) => {
 		setAnchorElUser(event.currentTarget);
@@ -38,7 +40,7 @@ const Header = ({ isAuth, user, logout }) => {
 	};
 
 	const loginOut = () => {
-		logout();
+		userStore.logout()
 		navigate(HOME_ROUTE);
 	};
 

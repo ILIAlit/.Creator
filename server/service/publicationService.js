@@ -20,6 +20,7 @@ class PublicationService {
 			title,
 			description,
 			link,
+			likeCount: 0,
 		});
 		tags = JSON.parse(tags);
 		tags.map(async (itemTag) => {
@@ -28,6 +29,7 @@ class PublicationService {
 				tag = await tagRepository.createTag(itemTag);
 			}
 			await publicationRepository.addPublicationTag(tag, publication);
+			await tagRepository.incrementTagCount(tag);
 		});
 		return publication;
 	}
