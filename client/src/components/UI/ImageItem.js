@@ -12,7 +12,11 @@ const ImageItem = forwardRef(({ src, title, author }, ref) => {
 	};
 
 	return (
-		<ImageListItem ref={ref} key={src} sx={{ minHeight: '300px' }}>
+		<ImageListItem
+			ref={ref}
+			key={src}
+			sx={{ minHeight: '300px', maxHeight: '500px' }}
+		>
 			{
 				<img
 					srcSet={src}

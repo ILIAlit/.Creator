@@ -1,8 +1,8 @@
 const sequelize = require('../db');
 const { DataTypes } = require('sequelize');
 
-const PublicationFavorites = sequelize.define('publicationFavorites', {
+const Like = sequelize.define('like', {
 	id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
 });
 
-module.exports = PublicationFavorites;
+module.exports = Like;

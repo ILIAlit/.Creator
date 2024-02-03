@@ -1,4 +1,5 @@
 const Tag = require('../models/tagModel');
+const sequelize = require('../db');
 
 class TagRepository {
 	async createTag(category) {
@@ -6,8 +7,8 @@ class TagRepository {
 		return tag;
 	}
 
-	async getTags() {
-		const tags = await Tag.findAll();
+	async getPopularTags(limit) {
+		const tags = await Tag.findAll({limit, order: [['publicationCount', 'DESC']] });
 		return tags;
 	}
 
@@ -17,13 +18,8 @@ class TagRepository {
 	}
 
 	async incrementTagCount(tag) {
-		try {
-			await tag.increment('publicationCount');
-			await tag.save();
-			console.log('Счетчик успешно обновлен.');
-		} catch (error) {
-			console.error('Ошибка при обновлении счетчика:', error);
-		}
+		await tag.increment('publicationCount');
+		await tag.save();
 	}
 }
 

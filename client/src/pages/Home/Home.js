@@ -3,7 +3,6 @@ import {
 	Container,
 	CssBaseline,
 	ImageList,
-	Pagination,
 	ThemeProvider,
 	Typography,
 	createTheme,
@@ -15,6 +14,7 @@ import { createRef, useContext, useEffect, useRef, useState } from 'react';
 import { Context } from '../../context/index';
 import Loader from '../../components/UI/Loader';
 import MySelect from '../../components/UI/MySelect';
+import TagsBar from '../../components/TagsBar/TagsBar';
 
 const defaultTheme = createTheme();
 
@@ -56,8 +56,6 @@ const Home = () => {
 		setPage(page + 1);
 	}
 
-	console.log(publications);
-
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<CssBaseline />
@@ -65,6 +63,7 @@ const Home = () => {
 				sx={{
 					pt: 4,
 					pb: 5,
+					mb: 3,
 				}}
 			>
 				<Container component="main" maxWidth="sm">
@@ -79,16 +78,26 @@ const Home = () => {
 					</Typography>
 				</Container>
 			</Box>
-			<Container maxWidth="xl">
+			<Container
+				maxWidth="xl"
+				sx={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					gap: 3,
+					alignItems: 'center',
+					mb: 3,
+				}}
+			>
 				<MySelect
 					options={[
-						{ value: 1, text: 'дизайн' },
-						{ value: 2, text: 'фото' },
+						{ value: 1, text: 'Популярные' },
+						{ value: 2, text: 'Новые' },
 					]}
 					value={tagFitter}
 					onChange={setTagFilter}
-					label="Тег"
+					label="Выбор"
 				/>
+				<TagsBar />
 			</Container>
 			<Container maxWidth="xl">
 				<ImageList variant="quilted" cols={3} gap={9}>

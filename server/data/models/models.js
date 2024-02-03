@@ -1,6 +1,6 @@
 const Favorites = require('./favoritesModel');
+const Like = require('./likeModel');
 const Profile = require('./profileModel');
-const PublicationFavorites = require('./publicationFavoritesModel');
 const Publication = require('./publicationModel');
 const PublicationTag = require('./publicationTagModel');
 const Tag = require('./tagModel');
@@ -12,14 +12,20 @@ Profile.belongsTo(User);
 User.hasMany(Publication);
 Publication.belongsTo(User);
 
-Publication.belongsToMany(Tag, { through: PublicationTag });
-Tag.belongsToMany(Publication, { through: PublicationTag });
-
 User.hasMany(Favorites);
 Favorites.belongsTo(User);
 
-Publication.belongsToMany(Favorites, { through: PublicationFavorites });
-Favorites.belongsToMany(Publication, { through: PublicationFavorites });
+User.hasMany(Like);
+Like.belongsTo(User);
+
+Publication.belongsToMany(Tag, { through: PublicationTag });
+Tag.belongsToMany(Publication, { through: PublicationTag });
+
+Publication.hasMany(Favorites);
+Favorites.belongsTo(Publication);
+
+Publication.hasMany(Like);
+Like.belongsTo(Publication);
 
 module.exports = {
 	User,
@@ -28,4 +34,5 @@ module.exports = {
 	Tag,
 	PublicationTag,
 	Favorites,
+	Like,
 };

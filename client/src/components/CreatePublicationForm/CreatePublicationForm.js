@@ -2,7 +2,7 @@ import { Button, Grid } from "@mui/material";
 import Input from "../UI/Input";
 import { useForm } from "react-hook-form";
 import ImageForm from "../UI/ImageForm";
-import ChipSelect from "../UI/TagSelect";
+import TagSelect from "../UI/TagSelect";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { schema } from "./validation";
 import InputMultiLine from "../UI/InputMultiLine";
@@ -93,7 +93,7 @@ const CreatePublicationForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <ChipSelect publTag={publTag} setPublTag={setPublTag} />
+            <TagSelect publTag={publTag} setPublTag={setPublTag} />
           </Grid>
         </Grid>
         <Button type='submit' sx={{width: '250px', height: '50px', mt: 5}} fullWidth variant='contained'>Сохранить</Button>
