@@ -2,17 +2,18 @@ import {
 	Box,
 	Container,
 	CssBaseline,
+	Paper,
 	ThemeProvider,
 	Typography,
 	createTheme,
 } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../../context';
 import { observer } from 'mobx-react-lite';
+import { useContext, useEffect, useState } from 'react';
 import ProfileCreateForm from '../../components/ProfileForm/ProfileCreateForm';
 import ProfilePreview from '../../components/ProfilePreview/ProfilePreview';
+import ButtonCreateProfile from '../../components/UI/Buttons/ButtonCreateProfile';
 import Loader from '../../components/UI/Loader';
-import ButtonCreateProfile from '../../components/UI/ButtonCreateProfile';
+import { Context } from '../../context';
 
 const defaultTheme = createTheme();
 
@@ -58,6 +59,7 @@ const Profile = () => {
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
+						gap: '20px',
 					}}
 				>
 					<Typography component="h1" variant="h3" sx={{ mb: 3 }}>
@@ -66,7 +68,7 @@ const Profile = () => {
 					{!isProfile ? (
 						<ButtonCreateProfile createProfile={createProfile} />
 					) : (
-						<Box>
+						<Paper elevation={3} sx={{ p: 2 }}>
 							{previewVisible ? (
 								<ProfilePreview
 									name={name}
@@ -79,7 +81,7 @@ const Profile = () => {
 							) : (
 								<ProfileCreateForm onSave={onCloseSave} />
 							)}
-						</Box>
+						</Paper>
 					)}
 				</Box>
 			</Container>

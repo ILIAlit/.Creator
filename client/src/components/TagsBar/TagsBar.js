@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Chip, Skeleton } from '@mui/material';
+import { Skeleton, Tab } from '@mui/material';
 import Tabs, { tabsClasses } from '@mui/material/Tabs';
 import { Context } from '../../context';
-import Loader from '../UI/Loader';
 
-export default function TagsBar() {
+export default function TagsBar({ value, onChange }) {
 	const { tagStore } = useContext(Context);
 	const { loading } = tagStore;
 	const [popularTags, setPopularTags] = useState([]);
@@ -32,17 +31,36 @@ export default function TagsBar() {
 
 	return (
 		<Tabs
+			value={value}
+			onChange={onChange}
 			variant="scrollable"
 			scrollButtons
 			sx={{
 				[`& .${tabsClasses.scrollButtons}`]: {
 					'&.Mui-disabled': { opacity: 0.9 },
 				},
-				alignItems: 'center',
 			}}
 		>
+			<Tab
+				value=""
+				label="По умолчанию"
+				sx={{
+					m: 0.5,
+					p: 1,
+					fontSize: '15px',
+				}}
+			/>
 			{popularTags.map((tag) => (
-				<Chip label={tag.category} sx={{ m: 1, p: 3, fontSize: '16px' }} />
+				<Tab
+					key={tag.id}
+					value={tag.id}
+					label={tag.category}
+					sx={{
+						m: 0.5,
+						p: 1,
+						fontSize: '15px',
+					}}
+				/>
 			))}
 		</Tabs>
 	);

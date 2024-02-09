@@ -1,8 +1,7 @@
-import { Box, ImageListItem, ImageListItemBar } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
-import { forwardRef, useEffect, useState } from 'react';
-import { Blurhash } from 'react-blurhash';
+import { Box, ImageListItem, ImageListItemBar } from '@mui/material';
+import { forwardRef, useState } from 'react';
+import LikeButton from './LikeButton';
 
 const ImageItem = forwardRef(({ src, title, author }, ref) => {
 	const [loaded, setLoaded] = useState(false);
@@ -32,7 +31,7 @@ const ImageItem = forwardRef(({ src, title, author }, ref) => {
 				subtitle={author}
 				actionIcon={
 					<Box sx={{ display: 'flex', gap: 1 }}>
-						<FavoriteBorderIcon sx={{ color: 'white', fontSize: 25 }} />
+						<LikeButton />
 						<BookmarkAddOutlinedIcon
 							sx={{ color: 'white', fontSize: 25 }}
 						/>

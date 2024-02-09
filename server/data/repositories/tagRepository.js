@@ -1,5 +1,5 @@
 const Tag = require('../models/tagModel');
-const sequelize = require('../db');
+
 
 class TagRepository {
 	async createTag(category) {

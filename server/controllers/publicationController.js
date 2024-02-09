@@ -22,8 +22,13 @@ class PublicationController {
 
 	async getPublications(req, res, next) {
 		try {
-			const { tagId, limit, page } = req.query;
-			const publications = await publicationService.getPublications(tagId, limit, page);
+			const { tagId, orderBy, limit, page } = req.query;
+			const publications = await publicationService.getPublications(
+				tagId,
+				orderBy,
+				limit,
+				page
+			);
 			return res.json(publications);
 		} catch (error) {
 			next(error);

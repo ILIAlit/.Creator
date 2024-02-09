@@ -7,7 +7,7 @@ const { makeAutoObservable } = require('mobx');
 export default class PublicationStore {
 	_publications = [];
 	_totalPages = 0;
-	_limit = 10;
+	_limit = 5;
 	loading;
 
 	constructor() {
@@ -47,16 +47,19 @@ export default class PublicationStore {
 		}
 	}
 
-	async getPublications(tagId, page) {
+	async getPublications(sort, page) {
 		this.loading.setIsLoading(true);
 		try {
+			const { tagId, orderBy } = sort;
 			const response = await PublicationService.getPublications(
 				tagId,
+				orderBy,
 				this.limit,
 				page
 			);
 			const totalCount = response.data.count;
 			this.setTotalPages(getPageCount(totalCount, this.limit));
+			console.log(response);
 			return response;
 		} catch ({ response: { data } }) {
 			return { error: data.massage };

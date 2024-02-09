@@ -1,3 +1,4 @@
-body {
+.main__body {
 	scrollbar-gutter: stable;
+	padding: 200px;
 }

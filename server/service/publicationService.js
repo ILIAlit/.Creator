@@ -1,6 +1,7 @@
 const publicationRepository = require('../data/repositories/publicationRepository');
 const tagRepository = require('../data/repositories/tagRepository');
 const userRepository = require('../data/repositories/userRepository');
+const publicationSorter = require('../modules/PublicationSorter');
 const imageUploadService = require('./imageUploadService');
 
 class PublicationService {
@@ -23,6 +24,9 @@ class PublicationService {
 			likeCount: 0,
 		});
 		tags = JSON.parse(tags);
+
+		// TODO: вынести в сервис тегов
+
 		tags.map(async (itemTag) => {
 			let tag = await tagRepository.getOneTag(itemTag);
 			if (!tag) {
@@ -34,23 +38,19 @@ class PublicationService {
 		return publication;
 	}
 
-	async getPublications(tagId, limit, page) {
+	async getPublications(tagId, orderBy, limit, page) {
 		limit = limit || 9;
 		page = page || 1;
+
 		let offset = page * limit - limit;
-		let publications;
-		if (tagId) {
-			publications = await publicationRepository.getPublicationsByTag(
-				tagId,
-				limit,
-				offset
-			);
-		} else {
-			publications = await publicationRepository.getPublications(
-				limit,
-				offset
-			);
-		}
+
+		const publications = await publicationSorter.sort(
+			tagId,
+			orderBy,
+			limit,
+			offset
+		);
+
 		return publications;
 	}
 

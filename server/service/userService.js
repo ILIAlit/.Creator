@@ -11,9 +11,13 @@ const profileService = require('./profileService');
 
 class UserService {
   async registration(name, email, password) {
-    const candidate = await User.findOne(name);
-    if(candidate) {
+    const candidateByName = await User.findOne(name);
+    if(candidateByName) {
       throw ApiError.badRequest(`Пользователь с именем ${name} существует`);
+    };
+    const candidateByEmail = await User.findOneByEmail(email);
+    if(candidateByEmail) {
+      throw ApiError.badRequest(`Пользователь с email ${email} существует`);
     };
     const hashPassword = await bcrypt.hash(password, 3);
     const user = await User.create(name, email, hashPassword);
