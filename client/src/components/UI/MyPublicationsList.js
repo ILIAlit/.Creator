@@ -23,6 +23,7 @@ export default function MyPublicationsList({ publications, lastElement }) {
 						if (index + 1 === publications.length) {
 							return (
 								<PublicationCard
+								    id={id}
 									likeCount={likeCount}
 									ref={lastElement}
 									key={id}

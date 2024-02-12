@@ -1,13 +1,17 @@
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Fab } from '@mui/material';
-import React from 'react';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
-export default function ButtonLike() {
+import { Fab } from '@mui/material'
+import React from 'react'
+
+export default function ButtonLike({ size, ...props }) {
+	const likeIconClick = event => {
+		event.stopPropagation()
+		console.log(`ButtonLike`)
+	}
+
 	return (
-		<>
-			<Fab>
-				<FavoriteBorderIcon sx={{ fontSize: 30 }} />
-			</Fab>
-		</>
-	);
+		<Fab onClick={likeIconClick} {...props}>
+			<FavoriteBorderIcon sx={{ fontSize: size }} />
+		</Fab>
+	)
 }

@@ -14,7 +14,9 @@ export default function MyCardContent({ author, likeCount }) {
 			>
 				<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
 					<Grid item>
-						<Typography sx={{ fontSize: '18px' }}>{author}</Typography>
+						<Typography variant="h4" sx={{ fontSize: '19px' }}>
+							{author}
+						</Typography>
 					</Grid>
 				</Box>
 				<Grid item>

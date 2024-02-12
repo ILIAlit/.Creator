@@ -1,58 +1,57 @@
-import { useContext, useState } from 'react';
 import {
 	AppBar,
+	Avatar,
 	Box,
+	Button,
 	Container,
+	CssBaseline,
 	IconButton,
 	Menu,
 	MenuItem,
 	Toolbar,
-	Typography,
-	Button,
 	Tooltip,
-	Avatar,
-	CssBaseline,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+	Typography,
+} from '@mui/material'
+import { observer } from 'mobx-react-lite'
+import { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Context } from '../../context/index'
 import {
 	CREATE_PUBLICATION_ROUTE,
 	HOME_ROUTE,
 	LOGIN_ROUTE,
-} from '../../utils/consts';
-import { observer } from 'mobx-react-lite';
-import BurgerMenu from '../UI/BurgerMenu';
-import SearchInput from '../UI/SearchInput';
-import { Context } from '../../context/index'
+} from '../../utils/consts'
+import BurgerMenu from '../UI/BurgerMenu'
+import SearchInput from '../UI/SearchInput'
 
 const Header = ({ isAuth, user, logout }) => {
-	const navigate = useNavigate();
+	const navigate = useNavigate()
 
-	const [anchorElUser, setAnchorElUser] = useState(null);
-	const {userStore} = useContext(Context)
+	const [anchorElUser, setAnchorElUser] = useState(null)
+	const { userStore } = useContext(Context)
 
-	const handleOpenUserMenu = (event) => {
-		setAnchorElUser(event.currentTarget);
-	};
+	const handleOpenUserMenu = event => {
+		setAnchorElUser(event.currentTarget)
+	}
 
 	const handleCloseUserMenu = () => {
-		setAnchorElUser(null);
-	};
+		setAnchorElUser(null)
+	}
 
 	const loginOut = () => {
 		userStore.logout()
-		navigate(HOME_ROUTE);
-	};
+		navigate(HOME_ROUTE)
+	}
 
-	console.log("HEADER")
+	console.log('HEADER')
 
 	return (
-		<AppBar sx={{position:'fixed',}} className="appBar">
+		<AppBar sx={{ position: 'fixed' }} className='appBar'>
 			<CssBaseline />
-			<Container maxWidth="xl">
+			<Container maxWidth='xl'>
 				<Toolbar disableGutters>
 					<Typography
-						variant="h6"
+						variant='h6'
 						noWrap
 						sx={{
 							mr: 2,
@@ -66,7 +65,7 @@ const Header = ({ isAuth, user, logout }) => {
 					<BurgerMenu />
 
 					<Typography
-						variant="h5"
+						variant='h5'
 						noWrap
 						sx={{
 							mr: 2,
@@ -80,9 +79,9 @@ const Header = ({ isAuth, user, logout }) => {
 
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 						<Button
-							variant="text"
+							variant='text'
 							onClick={() => {
-								navigate(HOME_ROUTE);
+								navigate(HOME_ROUTE)
 							}}
 							sx={{
 								my: 2,
@@ -95,9 +94,9 @@ const Header = ({ isAuth, user, logout }) => {
 						</Button>
 						{isAuth && (
 							<Button
-								variant="text"
+								variant='text'
 								onClick={() => {
-									navigate(CREATE_PUBLICATION_ROUTE);
+									navigate(CREATE_PUBLICATION_ROUTE)
 								}}
 								sx={{
 									my: 2,
@@ -116,7 +115,7 @@ const Header = ({ isAuth, user, logout }) => {
 							<>
 								{!isAuth && (
 									<Button
-										variant="contained"
+										variant='contained'
 										onClick={() => navigate(LOGIN_ROUTE)}
 										sx={{
 											my: 2,
@@ -129,11 +128,8 @@ const Header = ({ isAuth, user, logout }) => {
 									</Button>
 								)}
 								{isAuth && (
-									<IconButton
-										onClick={handleOpenUserMenu}
-										sx={{ p: 0 }}
-									>
-										<Avatar alt="avatar" src={user.avatar}>
+									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+										<Avatar alt='avatar' src={user.avatar}>
 											{user.name[0]}
 										</Avatar>
 									</IconButton>
@@ -142,7 +138,7 @@ const Header = ({ isAuth, user, logout }) => {
 						</Tooltip>
 						<Menu
 							sx={{ mt: '45px' }}
-							id="menu-appbar"
+							id='menu-appbar'
 							anchorEl={anchorElUser}
 							anchorOrigin={{
 								vertical: 'top',
@@ -158,25 +154,25 @@ const Header = ({ isAuth, user, logout }) => {
 						>
 							<MenuItem
 								component={Link}
-								to="/profile"
+								to='/profile'
 								onClick={handleCloseUserMenu}
 							>
-								<Typography textAlign="center">Профиль</Typography>
+								<Typography textAlign='center'>Профиль</Typography>
 							</MenuItem>
 							<MenuItem
 								onClick={() => {
-									loginOut();
-									handleCloseUserMenu();
+									loginOut()
+									handleCloseUserMenu()
 								}}
 							>
-								<Typography textAlign="center">Выйти</Typography>
+								<Typography textAlign='center'>Выйти</Typography>
 							</MenuItem>
 						</Menu>
 					</Box>
 				</Toolbar>
 			</Container>
 		</AppBar>
-	);
-};
+	)
+}
 
-export default observer(Header);
+export default observer(Header)
