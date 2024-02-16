@@ -1,9 +1,11 @@
 module.exports = class UserDto {
-  name;
-  avatar;
+	id
+	name
+	avatar
 
-  constructor(user, avatar) {
-    this.avatar = avatar;
-    this.name = user.name;
-  };
+	constructor(user, avatar) {
+		this.avatar = avatar
+		this.name = user.name
+    this.id = user.id
+	}
 }
