@@ -6,6 +6,6 @@ module.exports = class UserDto {
 	constructor(user, avatar) {
 		this.avatar = avatar
 		this.name = user.name
-    this.id = user.id
+		this.id = user.id
 	}
 }

@@ -1,6 +1,7 @@
 const publicationRepository = require('../data/repositories/publicationRepository')
 const tagRepository = require('../data/repositories/tagRepository')
 const userRepository = require('../data/repositories/userRepository')
+const PaginationModule = require('../modules/PaginationModule')
 const publicationCheckIsLikely = require('../modules/PublicationCheckIsLikely')
 const publicationSorter = require('../modules/PublicationSorter')
 const imageUploadService = require('./imageUploadService')
@@ -32,16 +33,13 @@ class PublicationService {
 		return publication
 	}
 
-	async getPublications(tagId, orderBy, limit, page, user) {
-		limit = limit || 9
-		page = page || 1
-
-		let offset = page * limit - limit
+	async getPublications(tagId, orderBy, limit, page) {
+		const { limit: limitVerify, offset } = new PaginationModule(limit, page)
 
 		const publications = await publicationSorter.sort(
 			tagId,
 			orderBy,
-			limit,
+			(limit = limitVerify),
 			offset
 		)
 
