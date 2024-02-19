@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
-import LikeService from '../service/likeService'
+import FavoriteService from '../service/favoriteService'
 import LoadingStore from './loadingStore'
 
-export default class LikeStore {
+export default class FavoriteStore {
 	loading
 
 	constructor() {
@@ -10,23 +10,23 @@ export default class LikeStore {
 		this.loading = new LoadingStore()
 	}
 
-	async checkIsLike(publicationId) {
+	async checkIsSave(publicationId) {
 		this.loading.setIsLoading(true)
 		try {
-			const response = await LikeService.checkIsLike(publicationId)
+			const response = await FavoriteService.checkIsSave(publicationId)
 			const { data } = response
-			return data.isLike
-		} catch {
+			return data.isSave
+		} catch ({ response: { data } }) {
 			return false
 		} finally {
 			this.loading.setIsLoading(false)
 		}
 	}
 
-	async createLike(publicationId) {
+	async createFavorite(publicationId) {
 		this.loading.setIsLoading(true)
 		try {
-			const response = await LikeService.createLike(publicationId)
+			const response = await FavoriteService.createFavorite(publicationId)
 			return response
 		} catch ({ response: { data } }) {
 			return { error: data.message }
@@ -35,11 +35,10 @@ export default class LikeStore {
 		}
 	}
 
-	async deleteLike(publicationId) {
+	async deleteFavorite(publicationId) {
 		this.loading.setIsLoading(true)
 		try {
-			const response = await LikeService.deleteLike(publicationId)
-			console.log('delete', response)
+			const response = await FavoriteService.deleteFavorite(publicationId)
 			return response
 		} catch ({ response: { data } }) {
 			return { error: data.message }

@@ -20,6 +20,13 @@ class FavoriteRepository {
 		})
 		return favorite
 	}
+
+	async getOne(userId, publicationId) {
+		const favorite = await Favorites.findOne({
+			where: { userId, publicationId },
+		})
+		return favorite
+	}
 }
 
 module.exports = new FavoriteRepository()

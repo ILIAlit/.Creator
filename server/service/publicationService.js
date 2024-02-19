@@ -2,7 +2,7 @@ const publicationRepository = require('../data/repositories/publicationRepositor
 const tagRepository = require('../data/repositories/tagRepository')
 const userRepository = require('../data/repositories/userRepository')
 const PaginationModule = require('../modules/PaginationModule')
-const publicationCheckIsLikely = require('../modules/PublicationCheckIsLikely')
+const publicationCheckModule = require('../modules/PublicationCheckModule')
 const publicationSorter = require('../modules/PublicationSorter')
 const imageUploadService = require('./imageUploadService')
 
@@ -47,7 +47,11 @@ class PublicationService {
 	}
 
 	async checkIsLike(publicationId, userId) {
-		return await publicationCheckIsLikely.checkIsLike(publicationId, userId)
+		return await publicationCheckModule.checkIsLike(publicationId, userId)
+	}
+
+	async checkIsSave(publicationId, userId) {
+		return await publicationCheckModule.checkIsSave(publicationId, userId)
 	}
 
 	async getOnePublication() {

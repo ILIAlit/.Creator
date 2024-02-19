@@ -48,6 +48,17 @@ class PublicationController {
 		}
 	}
 
+	async checkIsSave(req, res, next) {
+		try {
+			const { publicationId } = req.query
+			const userId = req.user.id
+			const isSave = await publicationService.checkIsSave(publicationId, userId)
+			return res.json(isSave)
+		} catch (error) {
+			next(error)
+		}
+	}
+
 	async getOnePublication(req, res, next) {
 		try {
 			return res.json('publ getOne')

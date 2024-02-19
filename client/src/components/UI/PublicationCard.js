@@ -11,8 +11,9 @@ export default forwardRef(function PublicationCard(
 	ref
 ) {
 	const [isLike, setIsLike] = useState(false)
+	const [isSave, setIsSave] = useState(false)
 
-	const { likeStore, alertStore } = useContext(Context)
+	const { likeStore, favoriteStore } = useContext(Context)
 	const navigate = useNavigate()
 
 	const cardClick = () => {
@@ -24,26 +25,34 @@ export default forwardRef(function PublicationCard(
 		setIsLike(isLikeResponse)
 	}
 
+	async function checkIsSave(publicationId) {
+		const isSaveResponse = await favoriteStore.checkIsSave(publicationId)
+		setIsSave(isSaveResponse)
+	}
+
 	useEffect(() => {
 		checkIsLike(id)
+		checkIsSave(id)
 	}, [])
 
 	return (
 		<Paper variant='outlined'>
-			<CardActionArea onClick={cardClick}>
-				<Card ref={ref}>
-					<Box sx={{ position: 'relative' }}>
+			<Card ref={ref}>
+				<Box sx={{ position: 'relative' }}>
+					<CardActionArea onClick={cardClick}>
 						<CardMedia component='img' alt={title} height='340' image={src} />
 						<CardCover
+							setIsSave={setIsSave}
+							isSave={isSave}
 							setIsLike={setIsLike}
 							publicationId={id}
 							isLike={isLike}
 							title={title}
 						/>
-					</Box>
-					<MyCardContent author={author} likeCount={likeCount} />
-				</Card>
-			</CardActionArea>
+					</CardActionArea>
+				</Box>
+				<MyCardContent author={author} likeCount={likeCount} />
+			</Card>
 		</Paper>
 	)
 })

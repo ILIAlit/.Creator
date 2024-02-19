@@ -3,11 +3,22 @@ import { default as React } from 'react'
 import ButtonLike from './Buttons/ButtonLike'
 import ButtonSave from './Buttons/ButtonSave'
 
-export default function CardCover({ isLike, publicationId, title, setIsLike }) {
+export default function CardCover({
+	isLike,
+	publicationId,
+	title,
+	setIsLike,
+	isSave,
+	setIsSave,
+}) {
 	return (
 		<Box className='publication-cover'>
 			<Box className='publication-navigate-buttons'>
-				<ButtonSave />
+				<ButtonSave
+					setIsSave={setIsSave}
+					publicationId={publicationId}
+					isSave={isSave}
+				/>
 				<ButtonLike
 					setIsLike={setIsLike}
 					publicationId={publicationId}

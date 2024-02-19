@@ -3,7 +3,7 @@ import { $authApi } from '../http'
 export default class LikeService {
 	static async checkIsLike(publicationId) {
 		try {
-			return $authApi.get('publication/check', { params: { publicationId } })
+			return $authApi.get('publication/checkIsLike', { params: { publicationId } })
 		} catch (error) {
 			console.log(error)
 		}

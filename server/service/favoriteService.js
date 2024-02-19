@@ -1,10 +1,18 @@
 const favoriteRepository = require('../data/repositories/favoriteRepository')
 const PaginationModule = require('../modules/PaginationModule')
 const ApiError = require('../error/ApiError')
+const publicationService = require('./publicationService')
 
 class FavoriteService {
 	async createFavorite(user, publicationId) {
 		const userId = user.id
+		const isSaveObject = await publicationService.checkIsSave(
+			publicationId,
+			userId
+		)
+		if(isSaveObject.isSave) {
+			throw ApiError.badRequest('Сохранение существует')
+		}
 		const favorite = await favoriteRepository.createFavorite(
 			userId,
 			publicationId

@@ -25,8 +25,6 @@ export default function ButtonLike({
 		})
 	}
 
-	console.log(isLike)
-
 	const deleteLike = event => {
 		event.stopPropagation()
 		likeStore.deleteLike(publicationId).then(res => {
