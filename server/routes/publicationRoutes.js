@@ -7,11 +7,13 @@ const {
 	checkIsLike,
 	getPublications,
 	checkIsSave,
+	getUserPublications,
 } = require('../controllers/publicationController')
 
 router.post('/', authMiddleware, createPublication)
 router.get('/checkIsLike', authMiddleware, checkIsLike)
 router.get('/checkIsSave', authMiddleware, checkIsSave)
+router.get('/getUserPublications', authMiddleware, getUserPublications)
 router.get('/:id', getOnePublication)
 router.get('/', getPublications)
 

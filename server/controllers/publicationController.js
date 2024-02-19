@@ -22,14 +22,12 @@ class PublicationController {
 
 	async getPublications(req, res, next) {
 		try {
-			const user = req.user || null
 			const { tagId, orderBy, limit, page } = req.query
 			const publications = await publicationService.getPublications(
 				tagId,
 				orderBy,
 				limit,
-				page,
-				user
+				page
 			)
 			return res.json(publications)
 		} catch (error) {
@@ -62,6 +60,21 @@ class PublicationController {
 	async getOnePublication(req, res, next) {
 		try {
 			return res.json('publ getOne')
+		} catch (error) {
+			next(error)
+		}
+	}
+
+	async getUserPublications(req, res, next) {
+		try {
+			const user = req.user
+			const { limit, page } = req.query
+			const publications = await publicationService.getUserPublications(
+				user,
+				limit,
+				page
+			)
+			return res.json(publications)
 		} catch (error) {
 			next(error)
 		}

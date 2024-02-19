@@ -46,4 +46,16 @@ export default class FavoriteStore {
 			this.loading.setIsLoading(false)
 		}
 	}
+
+	async getUserSaved() {
+		this.loading.setIsLoading(true)
+		try {
+			const response = await FavoriteService.getUserSaved()
+			return response
+		} catch ({ response: { data } }) {
+			return { error: data.message }
+		} finally {
+			this.loading.setIsLoading(false)
+		}
+	}
 }

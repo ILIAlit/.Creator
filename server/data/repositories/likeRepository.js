@@ -1,4 +1,6 @@
 const Like = require('../models/likeModel')
+const Publication = require('../models/publicationModel')
+const User = require('../models/userModel')
 
 class LikeRepository {
 	async createLike(userId, publicationId) {
@@ -12,6 +14,18 @@ class LikeRepository {
 
 	async getOne(userId, publicationId) {
 		return await Like.findOne({ where: { userId, publicationId } })
+	}
+
+	async getUserLikes(userId, limit, offset) {
+		const likes = await Publication.findAndCountAll({
+			include: [
+				{ model: Like, where: { userId } },
+				{ model: User, attributes: ['name'] },
+			],
+			limit,
+			offset,
+		})
+		return likes
 	}
 }
 

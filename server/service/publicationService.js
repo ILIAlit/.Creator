@@ -61,6 +61,17 @@ class PublicationService {
 			next(error)
 		}
 	}
+
+	async getUserPublications(user, limit, page) {
+		const { limit: limitVerify, offset } = new PaginationModule(limit, page)
+		const userId = user.id
+		const publications = await publicationRepository.getUserPublications(
+			userId,
+			(limit = limitVerify),
+			offset
+		)
+		return publications
+	}
 }
 
 module.exports = new PublicationService()

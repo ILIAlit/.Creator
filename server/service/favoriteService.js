@@ -35,10 +35,10 @@ class FavoriteService {
 		return favorite
 	}
 
-	async getFavorites(user, limit, page) {
+	async getUserFavorites(user, limit, page) {
 		const userId = user.id
 		const { limit: limitVerify, offset } = new PaginationModule(limit, page)
-		const favorites = await favoriteRepository.getFavorites(
+		const favorites = await favoriteRepository.getUserFavorites(
 			userId,
 			(limit = limitVerify),
 			offset

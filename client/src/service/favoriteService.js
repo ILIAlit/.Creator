@@ -25,4 +25,12 @@ export default class FavoriteService {
 			console.log(error)
 		}
 	}
+
+	static async getUserSaved() {
+		try {
+			return $authApi.get('publication/getUserSaved')
+		} catch (error) {
+			console.log(error)
+		}
+	}
 }

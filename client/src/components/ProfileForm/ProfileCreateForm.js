@@ -1,37 +1,37 @@
-import { Instagram, Telegram } from '@mui/icons-material';
-import SaveIcon from '@mui/icons-material/Save';
-import { LoadingButton } from '@mui/lab';
-import { Box, Button } from '@mui/material';
-import { useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Context } from '../../context/index';
-import ImageForm from '../UI/ImageForm';
-import Input from '../UI/Input';
+import { Instagram, Telegram } from '@mui/icons-material'
+import SaveIcon from '@mui/icons-material/Save'
+import { LoadingButton } from '@mui/lab'
+import { Box, Button } from '@mui/material'
+import { useContext, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Context } from '../../context/index'
+import ImageForm from '../UI/ImageForm'
+import Input from '../UI/Input'
 
 const FormProfile = ({ onSave }) => {
-	const { profileStore, alertStore } = useContext(Context);
-	const { control, handleSubmit, register } = useForm();
-	const [loading, setLoading] = useState(false);
+	const { profileStore, alertStore } = useContext(Context)
+	const { control, handleSubmit, register } = useForm()
+	const [loading, setLoading] = useState(false)
 
-	const onSubmit = async (data) => {
+	const onSubmit = async data => {
 		try {
-			const formData = new FormData();
-			formData.append('instagramLink', data.instagramLink);
-			formData.append('telegramLink', data.telegramLink);
-			formData.append('status', data.status);
-			formData.append('avatar', data.avatar[0]);
+			const formData = new FormData()
+			formData.append('instagramLink', data.instagramLink)
+			formData.append('telegramLink', data.telegramLink)
+			formData.append('status', data.status)
+			formData.append('avatar', data.avatar[0])
 			profileStore
 				.createProfile(formData)
-				.then((res) => {
+				.then(res => {
 					if (res.error) {
-						alertStore.alertOpen(res.error, 'error');
+						alertStore.alertOpen(res.error, 'error')
 					} else {
-						alertStore.alertOpen('Профиль создан', 'success');
+						alertStore.alertOpen('Профиль создан', 'success')
 					}
 				})
-				.finally(() => onSave());
+				.finally(() => onSave())
 		} catch (error) {}
-	};
+	}
 
 	return (
 		<Box
@@ -41,25 +41,25 @@ const FormProfile = ({ onSave }) => {
 				flexDirection: 'column',
 				alignItems: 'center',
 			}}
-			component="form"
+			component='form'
 			onSubmit={handleSubmit(onSubmit)}
 		>
 			<ImageForm
 				register={register}
-				name="avatar"
-				variant="circle"
-				width="160px"
-				height="160px"
+				name='avatar'
+				variant='circle'
+				width='160px'
+				height='160px'
 			/>
-			<Box maxWidth="xs" sx={{ mt: 2 }}>
+			<Box maxWidth='xs' sx={{ mt: 2 }}>
 				<Box sx={{ display: 'flex', alignItems: 'flex-end', mb: 2 }}>
 					<Input
 						control={control}
-						name="status"
-						label="Статус"
-						variant="outlined"
-						id="status"
-						type="text"
+						name='status'
+						label='Статус'
+						variant='outlined'
+						id='status'
+						type='text'
 					/>
 				</Box>
 				<Box sx={{ display: 'flex', gap: 2 }}>
@@ -67,32 +67,32 @@ const FormProfile = ({ onSave }) => {
 						<Instagram sx={{ color: 'action.active', mr: 1, my: 1.3 }} />
 						<Input
 							control={control}
-							name="instagramLink"
-							label="Инстаграм"
-							variant="standard"
-							id="instagram"
-							type="text"
+							name='instagramLink'
+							label='Инстаграм'
+							variant='standard'
+							id='instagram'
+							type='text'
 						/>
 					</Box>
 					<Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
 						<Telegram sx={{ color: 'action.active', mr: 1, my: 1.3 }} />
 						<Input
 							control={control}
-							name="telegramLink"
-							label="Телеграм"
-							variant="standard"
-							id="telegram"
-							type="text"
+							name='telegramLink'
+							label='Телеграм'
+							variant='standard'
+							id='telegram'
+							type='text'
 						/>
 					</Box>
 				</Box>
 				<Box sx={{ display: 'flex', gap: 2 }}>
 					<LoadingButton
-						type="submit"
+						type='submit'
 						fullWidth
-						variant="contained"
+						variant='contained'
 						sx={{ mt: 5, mb: 3, fontSize: '16px' }}
-						loadingPosition="start"
+						loadingPosition='start'
 						startIcon={<SaveIcon />}
 						loading={loading}
 					>
@@ -108,7 +108,7 @@ const FormProfile = ({ onSave }) => {
 				</Box>
 			</Box>
 		</Box>
-	);
-};
+	)
+}
 
-export default FormProfile;
+export default FormProfile

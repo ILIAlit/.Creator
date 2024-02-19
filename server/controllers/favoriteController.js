@@ -23,11 +23,15 @@ class FavoriteController {
 		}
 	}
 
-	async getFavorites(req, res, next) {
+	async getUserFavorites(req, res, next) {
 		try {
 			const user = req.user
 			const { limit, page } = req.query
-			const favorites = await favoriteService.getFavorites(user, limit, page)
+			const favorites = await favoriteService.getUserFavorites(
+				user,
+				limit,
+				page
+			)
 			res.json(favorites)
 		} catch (error) {
 			next(error)

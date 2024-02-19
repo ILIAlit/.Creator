@@ -2,6 +2,7 @@ const likeRepository = require('../data/repositories/likeRepository')
 const publicationService = require('./publicationService')
 const ApiError = require('../error/ApiError')
 const publicationRepository = require('../data/repositories/publicationRepository')
+const PaginationModule = require('../modules/PaginationModule')
 
 class LikeService {
 	async createLike(user, publicationId) {
@@ -30,6 +31,13 @@ class LikeService {
 		await publicationRepository.decrementLikeCount(publication)
 		return like
 	}
+
+	async getUserLikes(user, limit, page) {
+        const userId = user.id
+		const { limit: limitVerify, offset } = new PaginationModule(limit, page)
+        const likes = await likeRepository.getUserLikes(userId, limit, offset)
+        return likes
+    }
 }
 
 module.exports = new LikeService()

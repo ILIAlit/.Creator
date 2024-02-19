@@ -24,4 +24,12 @@ export default class LikeService {
 			console.log(error)
 		}
 	}
+
+	static async getUserLiked() {
+		try {
+            return $authApi.get('publication/getUserLiked')
+        } catch (error) {
+            console.log(error)
+        }
+	}
 }

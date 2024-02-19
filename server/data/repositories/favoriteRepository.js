@@ -1,5 +1,6 @@
 const Favorites = require('../models/favoritesModel')
 const Publication = require('../models/publicationModel')
+const User = require('../models/userModel')
 
 class FavoriteRepository {
 	async createFavorite(userId, publicationId) {
@@ -11,10 +12,12 @@ class FavoriteRepository {
 		return await Favorites.destroy({ where: { userId, publicationId } })
 	}
 
-	async getFavorites(userId, limit, offset) {
-		const favorite = await Favorites.findAndCountAll({
-			where: { userId },
-			include: [{ model: Publication }],
+	async getUserFavorites(userId, limit, offset) {
+		const favorite = await Publication.findAndCountAll({
+			include: [
+				{ model: Favorites, where: { userId } },
+				{ model: User, attributes: ['name'] },
+			],
 			limit,
 			offset,
 		})

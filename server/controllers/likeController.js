@@ -22,6 +22,17 @@ class LikeController {
 			next(error)
 		}
 	}
+
+	async getUserLikes(req, res, next) {
+		try {
+			const user = req.user
+			const { limit, page } = req.query
+			const likes = await likeService.getUserLikes(user, limit, page)
+			return res.json(likes)
+		} catch (error) {
+			next(error)
+		}
+	}
 }
 
 module.exports = new LikeController()

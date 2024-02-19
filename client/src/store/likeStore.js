@@ -47,4 +47,16 @@ export default class LikeStore {
 			this.loading.setIsLoading(false)
 		}
 	}
+
+	async getUserLiked() {
+		this.loading.setIsLoading(true)
+        try {
+            const response = await LikeService.getUserLiked()
+            return response
+        } catch ({ response: { data } }) {
+            return { error: data.message }
+        } finally {
+            this.loading.setIsLoading(false)
+        }
+	}
 }

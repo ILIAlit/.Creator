@@ -1,39 +1,39 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Skeleton, Tab } from '@mui/material';
-import Tabs, { tabsClasses } from '@mui/material/Tabs';
-import { Context } from '../../context';
+import { Skeleton, Tab } from '@mui/material'
+import Tabs, { tabsClasses } from '@mui/material/Tabs'
+import React, { useContext, useEffect, useState } from 'react'
+import { Context } from '../../context'
 
 export default function TagsBar({ value, onChange }) {
-	const { tagStore } = useContext(Context);
-	const { loading } = tagStore;
-	const [popularTags, setPopularTags] = useState([]);
+	const { tagStore } = useContext(Context)
+	const { loading } = tagStore
+	const [popularTags, setPopularTags] = useState([])
 
 	async function getPopularTag() {
-		const tags = await tagStore.getPupularTag();
-		setPopularTags(tags);
+		const tags = await tagStore.getPupularTag()
+		setPopularTags(tags)
 	}
 
 	useEffect(() => {
-		getPopularTag();
-	}, []);
+		getPopularTag()
+	}, [])
 
 	if (loading.isLoading) {
 		return (
 			<>
-				<Skeleton animation="wave" height={80} width="80%" />
-				<Skeleton animation="wave" height={80} width="70%" />
-				<Skeleton animation="wave" height={80} width="40%" />
-				<Skeleton animation="wave" height={80} width="70%" />
-				<Skeleton animation="wave" height={80} width="50%" />
+				<Skeleton animation='wave' height={80} width='80%' />
+				<Skeleton animation='wave' height={80} width='70%' />
+				<Skeleton animation='wave' height={80} width='40%' />
+				<Skeleton animation='wave' height={80} width='70%' />
+				<Skeleton animation='wave' height={80} width='50%' />
 			</>
-		);
+		)
 	}
 
 	return (
 		<Tabs
 			value={value}
 			onChange={onChange}
-			variant="scrollable"
+			variant='scrollable'
 			scrollButtons
 			sx={{
 				[`& .${tabsClasses.scrollButtons}`]: {
@@ -42,15 +42,15 @@ export default function TagsBar({ value, onChange }) {
 			}}
 		>
 			<Tab
-				value=""
-				label="По умолчанию"
+				value=''
+				label='По умолчанию'
 				sx={{
 					m: 0.5,
 					p: 1,
 					fontSize: '15px',
 				}}
 			/>
-			{popularTags.map((tag) => (
+			{popularTags.map(tag => (
 				<Tab
 					key={tag.id}
 					value={tag.id}
@@ -63,5 +63,5 @@ export default function TagsBar({ value, onChange }) {
 				/>
 			))}
 		</Tabs>
-	);
+	)
 }
