@@ -9,9 +9,9 @@ import {
 import { observer } from 'mobx-react-lite'
 import { useContext } from 'react'
 import UserProfileInfo from '../../components/UI/UserProfileInfo'
+import UserActivityBar from '../../components/UserActivityBar/UserActivityBar'
 import { Context } from '../../context'
 import '../../style/profile.css'
-import UserActivityBar from '../../components/UserActivityBar/UserActivityBar'
 
 const defaultTheme = createTheme()
 

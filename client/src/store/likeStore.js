@@ -48,10 +48,10 @@ export default class LikeStore {
 		}
 	}
 
-	async getUserLiked() {
+	async getUserLikes() {
 		this.loading.setIsLoading(true)
         try {
-            const response = await LikeService.getUserLiked()
+            const response = await LikeService.getUserLikes()
             return response
         } catch ({ response: { data } }) {
             return { error: data.message }

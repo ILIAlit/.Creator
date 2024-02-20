@@ -14,10 +14,7 @@ export default observer(function UserProfileInfo({ name }) {
 	const [previewVisible, setPreviewVisible] = useState(true)
 
 	useEffect(() => {
-		profileStore.getProfile().then(res => console.log(res))
-		// if (!isProfile) {
-		// 	alertStore.alertOpen('Заполните профиль', 'info')
-		// }
+		profileStore.getProfile()
 	}, [])
 
 	const onClosePreview = () => {

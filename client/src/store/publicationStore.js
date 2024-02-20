@@ -71,7 +71,6 @@ export default class PublicationStore {
 			)
 			const totalCount = response.data.count
 			this.setTotalPages(getPageCount(totalCount, this.limit))
-			console.log(response)
 			return response
 		} catch ({ response: { data } }) {
 			return { error: data.massage }

@@ -2,6 +2,7 @@ import { ImageList } from '@mui/material'
 import React from 'react'
 import ErrorBoundary from '../../error/ErrorBoundary'
 import '../../style/publication-style.css'
+import Loader from './Loader'
 import PublicationCard from './PublicationCard'
 
 const ErrorMsg = error => {
@@ -14,7 +15,13 @@ const ErrorMsg = error => {
 	)
 }
 
-export default function MyPublicationsList({ publications, lastElement }) {
+export default function MyPublicationsList({
+	publications,
+	lastElement,
+	isLoading,
+}) {
+	if (isLoading) return <Loader />
+
 	return (
 		<ImageList variant='quilted' cols={3} gap={9}>
 			<ErrorBoundary ErrorComponent={ErrorMsg}>

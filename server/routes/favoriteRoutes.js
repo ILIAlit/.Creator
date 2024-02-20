@@ -8,8 +8,8 @@ const {
 
 const authMiddleware = require('../middleware/authMiddleware.js')
 
-router.post('/', authMiddleware, createFavorite)
 router.get('/getUserFavorites', authMiddleware, getUserFavorites)
+router.post('/', authMiddleware, createFavorite)
 router.delete('/', authMiddleware, deleteFavorite)
 
 module.exports = router

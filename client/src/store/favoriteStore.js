@@ -47,10 +47,10 @@ export default class FavoriteStore {
 		}
 	}
 
-	async getUserSaved() {
+	async getUserFavorites() {
 		this.loading.setIsLoading(true)
 		try {
-			const response = await FavoriteService.getUserSaved()
+			const response = await FavoriteService.getUserFavorites()
 			return response
 		} catch ({ response: { data } }) {
 			return { error: data.message }

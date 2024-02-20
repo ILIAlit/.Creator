@@ -53,8 +53,6 @@ const Home = () => {
 		getSortedPublications(1, sort)
 	}, [sort])
 
-	console.log(publications)
-
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<Grid>

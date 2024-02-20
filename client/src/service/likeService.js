@@ -3,7 +3,9 @@ import { $authApi } from '../http'
 export default class LikeService {
 	static async checkIsLike(publicationId) {
 		try {
-			return $authApi.get('publication/checkIsLike', { params: { publicationId } })
+			return $authApi.get('publication/checkIsLike', {
+				params: { publicationId },
+			})
 		} catch (error) {
 			console.log(error)
 		}
@@ -25,11 +27,11 @@ export default class LikeService {
 		}
 	}
 
-	static async getUserLiked() {
+	static async getUserLikes() {
 		try {
-            return $authApi.get('publication/getUserLiked')
-        } catch (error) {
-            console.log(error)
-        }
+			return $authApi.get('like/getUserLikes')
+		} catch (error) {
+			console.log(error)
+		}
 	}
 }
