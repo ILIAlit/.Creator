@@ -12,12 +12,12 @@ class PublicationRepository {
 
 	async getUserPublications(userId, limit, offset) {
 		const publications = await Publication.findAndCountAll({
-            where: { userId },
-            include: [{ model: User, attributes: ['name'] }],
-            limit,
-            offset,
-        })
-        return publications
+			where: { userId },
+			include: [{ model: User, attributes: ['name'] }],
+			limit,
+			offset,
+		})
+		return publications
 	}
 
 	async getOnePublication(id) {

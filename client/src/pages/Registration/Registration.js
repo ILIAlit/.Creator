@@ -1,20 +1,20 @@
+import { ThemeProvider } from '@emotion/react'
 import {
+	Box,
 	Container,
 	CssBaseline,
-	createTheme,
-	Box,
 	Typography,
-} from '@mui/material';
-import { ThemeProvider } from '@emotion/react';
-import { observer } from 'mobx-react-lite';
-import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+	createTheme,
+} from '@mui/material'
+import { observer } from 'mobx-react-lite'
+import RegistrationForm from '../../components/RegistrationForm/RegistrationForm'
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme()
 
 const Registration = () => {
 	return (
 		<ThemeProvider theme={defaultTheme}>
-			<Container component="main" maxWidth="xs">
+			<Container component='main' maxWidth='xs'>
 				<CssBaseline />
 				<Box
 					sx={{
@@ -24,17 +24,17 @@ const Registration = () => {
 						alignItems: 'center',
 					}}
 				>
-					<Typography component="h1" variant="h3" sx={{ mb: 3 }}>
+					<Typography component='h1' variant='h3' sx={{ mb: 3 }}>
 						Creator.
 					</Typography>
-					<Typography component="h3" variant="h6">
+					<Typography component='h3' variant='h6'>
 						Регистрация
 					</Typography>
 					<RegistrationForm />
 				</Box>
 			</Container>
 		</ThemeProvider>
-	);
-};
+	)
+}
 
-export default observer(Registration);
+export default observer(Registration)

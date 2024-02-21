@@ -50,6 +50,7 @@ const Home = () => {
 	}, [])
 
 	useEffect(() => {
+		setPublications([])
 		getSortedPublications(1, sort)
 	}, [sort])
 

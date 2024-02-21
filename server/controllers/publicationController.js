@@ -59,7 +59,11 @@ class PublicationController {
 
 	async getOnePublication(req, res, next) {
 		try {
-			return res.json('publ getOne')
+			const { publicationId } = req.query
+			const publication = await publicationService.getOnePublication(
+				publicationId
+			)
+			return res.json(publication)
 		} catch (error) {
 			next(error)
 		}

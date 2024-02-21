@@ -27,9 +27,9 @@ export default class LikeService {
 		}
 	}
 
-	static async getUserLikes() {
+	static async getUserLikes(limit, page) {
 		try {
-			return $authApi.get('like/getUserLikes')
+			return $authApi.get('like/getUserLikes', {params: {limit, page} })
 		} catch (error) {
 			console.log(error)
 		}

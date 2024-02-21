@@ -1,58 +1,44 @@
 import { TabPanel } from '@mui/lab'
 import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import { Box, Tab } from '@mui/material'
+import { Box } from '@mui/material'
 import React, { createRef, useContext, useEffect, useState } from 'react'
 import { Context } from '../../context'
+import { useGetUserData } from '../../hooks/useGetUserData'
+import { useObserver } from '../../hooks/useObserver'
 import '../../style/profile.css'
 import MyPublicationsList from '../UI/MyPublicationsList'
+import UserActivityTabs from '../UI/UserActivityTabs'
 
 export default function UserActivityBar() {
-	const [myPublications, setMyPublications] = useState([])
-	const [myFavorites, setMyFavorites] = useState([])
-	const [myLikes, setMyLikes] = useState([])
-
 	const [selectValue, setSelectValue] = useState('publications')
-	const { publicationStore, favoriteStore, likeStore } =
-		useContext(Context)
-	const { loading: publicationLoad } = publicationStore
-	const { loading: favoriteLoad } = favoriteStore
-	const { loading: likeLoad } = likeStore
+	const { userActivityStore } = useContext(Context)
+	const { loading, totalPages } = userActivityStore
 
-	const [page, setPage] = useState(1)
+	const {
+		getUserData,
+		resetState,
+		page,
+		myFavorites,
+		myLikes,
+		myPublications,
+	} = useGetUserData(selectValue)
+
 	const lastElement = createRef()
 
+	useObserver(lastElement, page <= totalPages, () => {
+		console.log('getUserData')
+		getUserData(selectValue, page)
+	})
+
 	const handleChange = (event, newValue) => {
+		resetState()
 		setSelectValue(newValue)
-		getUserData(newValue)
+		getUserData(newValue, 1)
 	}
 
 	useEffect(() => {
-		getUserData(selectValue)
+		getUserData(selectValue, page)
 	}, [])
-
-	const getUserData = async selectValue => {
-		switch (selectValue) {
-			case 'publications': {
-				const publications = await publicationStore.getUserPublications()
-				setMyPublications([...publications.data.rows])
-				break
-			}
-			case 'favorites': {
-				const favorites = await favoriteStore.getUserFavorites()
-				setMyFavorites([...favorites.data.rows])
-				break
-			}
-			case 'liked': {
-				const likes = await likeStore.getUserLikes()
-				setMyLikes([...likes.data.rows])
-				break
-			}
-			default: {
-				break
-			}
-		}
-	}
 
 	return (
 		<TabContext value={selectValue}>
@@ -60,40 +46,27 @@ export default function UserActivityBar() {
 				sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
 			>
 				<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-					<TabList onChange={handleChange} aria-label='lab API tabs example'>
-						<Tab
-							sx={{ fontSize: '19px' }}
-							label='Мои публикации'
-							value={'publications'}
-						/>
-						<Tab
-							sx={{ fontSize: '19px' }}
-							label='Избранный'
-							value={'favorites'}
-						/>
-						<Tab
-							sx={{ fontSize: '19px' }}
-							label='Отметка нравится'
-							value={'liked'}
-						/>
-					</TabList>
+					<UserActivityTabs onChange={handleChange} />
 				</Box>
 				<TabPanel value={'publications'}>
 					<MyPublicationsList
 						publications={myPublications}
-						isLoading={publicationLoad.isLoading}
+						isLoading={loading.isLoading}
+						lastElement={lastElement}
 					/>
 				</TabPanel>
 				<TabPanel value={'favorites'}>
 					<MyPublicationsList
 						publications={myFavorites}
-						isLoading={favoriteLoad.isLoading}
+						isLoading={loading.isLoading}
+						lastElement={lastElement}
 					/>
 				</TabPanel>
 				<TabPanel value={'liked'}>
 					<MyPublicationsList
 						publications={myLikes}
-						isLoading={likeLoad.isLoading}
+						isLoading={loading.isLoading}
+						lastElement={lastElement}
 					/>
 				</TabPanel>
 			</Box>

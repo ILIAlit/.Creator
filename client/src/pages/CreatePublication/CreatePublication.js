@@ -1,24 +1,24 @@
-import CreatePublicationForm from '../../components/CreatePublicationForm/CreatePublicationForm';
-import { ThemeProvider } from '@emotion/react';
+import { ThemeProvider } from '@emotion/react'
 import {
 	Container,
 	CssBaseline,
 	Paper,
 	Typography,
 	createTheme,
-} from '@mui/material';
+} from '@mui/material'
+import CreatePublicationForm from '../../components/CreatePublicationForm/CreatePublicationForm'
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme()
 
 const CreatePublication = () => {
 	return (
 		<ThemeProvider theme={defaultTheme}>
-			<Container component="main" maxWidth="md" sx={{ p: 5 }}>
+			<Container component='main' maxWidth='md' sx={{ p: 5 }}>
 				<CssBaseline />
 				<Typography
-					component="h1"
-					variant="h4"
-					color="textPrimary"
+					component='h1'
+					variant='h4'
+					color='textPrimary'
 					gutterBottom
 				>
 					Создание публикации
@@ -28,7 +28,7 @@ const CreatePublication = () => {
 				</Paper>
 			</Container>
 		</ThemeProvider>
-	);
-};
+	)
+}
 
-export default CreatePublication;
+export default CreatePublication

@@ -1,6 +1,7 @@
 const publicationRepository = require('../data/repositories/publicationRepository')
 const tagRepository = require('../data/repositories/tagRepository')
 const userRepository = require('../data/repositories/userRepository')
+const ApiError = require('../error/ApiError')
 const PaginationModule = require('../modules/PaginationModule')
 const publicationCheckModule = require('../modules/PublicationCheckModule')
 const publicationSorter = require('../modules/PublicationSorter')
@@ -54,12 +55,14 @@ class PublicationService {
 		return await publicationCheckModule.checkIsSave(publicationId, userId)
 	}
 
-	async getOnePublication() {
-		try {
-			return res.json('publ getOne')
-		} catch (error) {
-			next(error)
+	async getOnePublication(publicationId) {
+		const publication = await publicationRepository.getOnePublication(
+			publicationId
+		)
+		if (!publication) {
+			throw ApiError.badRequest('Публикация не найдена!')
 		}
+		return publication
 	}
 
 	async getUserPublications(user, limit, page) {

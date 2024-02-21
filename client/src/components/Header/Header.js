@@ -22,6 +22,7 @@ import {
 	LOGIN_ROUTE,
 } from '../../utils/consts'
 import BurgerMenu from '../UI/BurgerMenu'
+import Logo from '../UI/Logo'
 import SearchInput from '../UI/SearchInput'
 
 const Header = ({ isAuth, user, logout }) => {
@@ -43,39 +44,30 @@ const Header = ({ isAuth, user, logout }) => {
 		navigate(HOME_ROUTE)
 	}
 
-	console.log('HEADER')
-
 	return (
 		<AppBar sx={{ position: 'fixed' }} className='appBar'>
 			<CssBaseline />
 			<Container maxWidth='xl'>
 				<Toolbar disableGutters>
-					<Typography
+					<Logo
 						variant='h6'
-						noWrap
 						sx={{
 							mr: 2,
 							display: { xs: 'none', md: 'flex' },
 							fontFamily: 'monospace',
 							margin: '15px',
 						}}
-					>
-						Creator.
-					</Typography>
+					/>
 					<BurgerMenu />
-
-					<Typography
+					<Logo
 						variant='h5'
-						noWrap
 						sx={{
 							mr: 2,
 							display: { xs: 'flex', md: 'none' },
 							flexGrow: 1,
 							fontFamily: 'monospace',
 						}}
-					>
-						Creator.
-					</Typography>
+					/>
 
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 						<Button

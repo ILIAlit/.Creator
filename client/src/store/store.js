@@ -4,6 +4,7 @@ import LikeStore from './likeStore'
 import ProfileStore from './profileStore'
 import PublicationStore from './publicationStore'
 import TagStore from './tagStore'
+import UserActivityStore from './userActivityStore'
 import UserStore from './userStore'
 
 export const store = {
@@ -13,5 +14,6 @@ export const store = {
 	tagStore: new TagStore(),
 	likeStore: new LikeStore(),
 	favoriteStore: new FavoriteStore(),
+	userActivityStore: new UserActivityStore(),
 	alertStore: new AlertStore(),
 }
