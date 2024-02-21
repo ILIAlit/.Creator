@@ -4,8 +4,8 @@ const profileService = require("../service/profileService");
 class ProfileController {
   async getProfile(req, res, next) {
     try {
-      const {name} = req.user
-      const profile = await profileService.getProfile(name)
+      const user = req.user
+      const profile = await profileService.getProfile(user)
       return res.json(profile);
     } catch(error) {
       next(error);

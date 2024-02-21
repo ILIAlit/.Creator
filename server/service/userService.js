@@ -33,6 +33,7 @@ class UserService {
 
 	async login(name, password) {
 		const user = await User.findOne(name)
+		const userId = user.id
 		if (!user) {
 			throw ApiError.badRequest(`Пользователь с именем ${name} не существует`)
 		}
@@ -41,7 +42,7 @@ class UserService {
 			throw ApiError.badRequest('Неверный пароль')
 		}
 
-		const avatar = await profileService.getProfileAvatar(user)
+		const avatar = await profileService.getProfileAvatar(userId)
 		const userDto = new UserDto(user, avatar)
 		const token = tokenService.generateToken({ ...userDto })
 

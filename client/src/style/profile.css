@@ -1,16 +1,29 @@
-
-
-
 .profile__user-name-block {
 	display: flex;
 	justify-content: center;
 	padding: 30px;
 }
 
-.profile__user-info-block { 
+.profile__user-info-block {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 20px;
 	padding: 50px;
- }
+}
+
+.profile__preview-content-block {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	text-align: center;
+	justify-content: center;
+	margin-left: 40px;
+}
+
+.profile__preview-block {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 40px;
+}

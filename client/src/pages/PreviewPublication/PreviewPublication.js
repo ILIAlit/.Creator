@@ -9,7 +9,8 @@ const defaultTheme = createTheme()
 
 export default observer(function PreviewPublication() {
 	const [publication, setPublication] = useState({})
-	const { image, title, description, likeCount } = publication
+	const { image, title, description, likeCount, user } = publication
+	const  name = user?.name
 	const { publicationStore } = useContext(Context)
 
 	const params = useParams()
@@ -31,6 +32,7 @@ export default observer(function PreviewPublication() {
 			<PublicationPreviewCard
 				publicationId={publicationId}
 				image={image}
+				name={name}
 				title={title}
 				description={description}
 				likeCount={likeCount}

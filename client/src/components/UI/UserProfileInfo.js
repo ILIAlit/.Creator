@@ -8,9 +8,17 @@ import '../../style/profile.css'
 import Loader from './Loader'
 
 export default observer(function UserProfileInfo({ name }) {
-	const { profileStore, alertStore } = useContext(Context)
+	const { profileStore } = useContext(Context)
 	const { profile, isProfile, loading } = profileStore
-	const { avatar, instagramLink, telegramLink, status } = profile
+	const {
+		avatar,
+		instagramLink,
+		telegramLink,
+		status,
+		user,
+	} = profile
+	const email = user?.email
+
 	const [previewVisible, setPreviewVisible] = useState(true)
 
 	useEffect(() => {
@@ -37,6 +45,7 @@ export default observer(function UserProfileInfo({ name }) {
 						name={name}
 						avatar={avatar}
 						status={status}
+						email={email}
 						telegramLink={telegramLink}
 						instagramLink={instagramLink}
 						onClick={onClosePreview}

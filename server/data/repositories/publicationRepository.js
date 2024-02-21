@@ -21,7 +21,7 @@ class PublicationRepository {
 	}
 
 	async getOnePublication(id) {
-		const publication = await Publication.findByPk(id)
+		const publication = await Publication.findByPk(id, {include: [{ model: User, attributes: ['name'] }] })
 		return publication
 	}
 

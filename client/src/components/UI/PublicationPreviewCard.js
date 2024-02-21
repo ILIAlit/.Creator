@@ -10,6 +10,7 @@ export default function PublicationPreviewCard({
 	publicationId,
 	image,
 	title,
+	name,
 	description,
 	likeCount,
 }) {
@@ -68,7 +69,7 @@ export default function PublicationPreviewCard({
 							/>
 						</Box>
 						<Box>
-							<MyCardContent author='ILIA' likeCount={likeCount} />
+							<MyCardContent author={name} likeCount={likeCount} />
 						</Box>
 					</Box>
 					<Box></Box>
