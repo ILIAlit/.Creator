@@ -7,6 +7,7 @@ const ApiError = require('../error/ApiError')
 const User = require('../data/repositories/userRepository')
 const Profile = require('../data/repositories/profileRepository')
 const profileService = require('./profileService')
+const profileRepository = require('../data/repositories/profileRepository')
 
 class UserService {
 	async registration(name, email, password) {
@@ -20,9 +21,10 @@ class UserService {
 		}
 		const hashPassword = await bcrypt.hash(password, 3)
 		const user = await User.create(name, email, hashPassword)
+		const userId = user.id
 
-		const avatar = await profileService.getProfileAvatar(user)
-		const userDto = new UserDto(user, avatar)
+		const profile = await profileRepository.create(userId)
+		const userDto = new UserDto(user)
 		const token = tokenService.generateToken({ ...userDto })
 
 		return {

@@ -26,6 +26,13 @@ const CreatePublicationForm = () => {
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
+		defaultValues: {
+			title: '',
+            description: '',
+            link: '',
+            publTag,
+			image: '',
+		}
 	})
 
 	const onSubmit = data => {

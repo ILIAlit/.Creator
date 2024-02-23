@@ -1,17 +1,34 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Instagram, Telegram } from '@mui/icons-material'
 import SaveIcon from '@mui/icons-material/Save'
 import { LoadingButton } from '@mui/lab'
 import { Box, Button } from '@mui/material'
-import { useContext, useState } from 'react'
+import { observer } from 'mobx-react-lite'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Context } from '../../context/index'
 import ImageForm from '../UI/ImageForm'
 import Input from '../UI/Input'
+import { validationSchema } from './validation'
+import InputMultiLine from '../UI/InputMultiLine'
 
 const FormProfile = ({ onSave }) => {
 	const { profileStore, alertStore } = useContext(Context)
-	const { control, handleSubmit, register } = useForm()
-	const [loading, setLoading] = useState(false)
+	const { loading } = profileStore
+	const {
+		control,
+		handleSubmit,
+		register,
+		formState: { errors },
+	} = useForm({
+		resolver: yupResolver(validationSchema),
+		defaultValues: {
+			instagramLink: '',
+			telegramLink: '',
+			status: '',
+			avatar: '',
+		},
+	})
 
 	const onSubmit = async data => {
 		try {
@@ -36,7 +53,7 @@ const FormProfile = ({ onSave }) => {
 	return (
 		<Box
 			sx={{
-				marginTop: 8,
+				margin: 4,
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
@@ -53,9 +70,11 @@ const FormProfile = ({ onSave }) => {
 			/>
 			<Box maxWidth='xs' sx={{ mt: 2 }}>
 				<Box sx={{ display: 'flex', alignItems: 'flex-end', mb: 2 }}>
-					<Input
+					<InputMultiLine
 						control={control}
 						name='status'
+						error={!!errors.status?.message}
+						helperText={errors.status?.message}
 						label='Статус'
 						variant='outlined'
 						id='status'
@@ -68,8 +87,10 @@ const FormProfile = ({ onSave }) => {
 						<Input
 							control={control}
 							name='instagramLink'
+							error={!!errors.instagramLink?.message}
+							helperText={errors.instagramLink?.message}
 							label='Инстаграм'
-							variant='standard'
+							variant='outlined'
 							id='instagram'
 							type='text'
 						/>
@@ -79,8 +100,10 @@ const FormProfile = ({ onSave }) => {
 						<Input
 							control={control}
 							name='telegramLink'
+							error={!!errors.telegramLink?.message}
+							helperText={errors.telegramLink?.message}
 							label='Телеграм'
-							variant='standard'
+							variant='outlined'
 							id='telegram'
 							type='text'
 						/>
@@ -94,7 +117,7 @@ const FormProfile = ({ onSave }) => {
 						sx={{ mt: 5, mb: 3, fontSize: '16px' }}
 						loadingPosition='start'
 						startIcon={<SaveIcon />}
-						loading={loading}
+						loading={loading.isLoading}
 					>
 						Сохранить
 					</LoadingButton>
@@ -111,4 +134,4 @@ const FormProfile = ({ onSave }) => {
 	)
 }
 
-export default FormProfile
+export default observer(FormProfile)

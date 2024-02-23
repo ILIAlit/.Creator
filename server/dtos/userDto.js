@@ -4,7 +4,7 @@ module.exports = class UserDto {
 	email
 	avatar
 
-	constructor(user, avatar) {
+	constructor(user, avatar = '') {
 		this.avatar = avatar
 		this.name = user.name
 		this.email = user.email
