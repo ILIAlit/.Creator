@@ -26,7 +26,6 @@ export default function UserActivityBar() {
 	const lastElement = createRef()
 
 	useObserver(lastElement, page <= totalPages, () => {
-		console.log('getUserData')
 		getUserData(selectValue, page)
 	})
 

@@ -4,16 +4,7 @@ import ErrorBoundary from '../../error/ErrorBoundary'
 import '../../style/publication-style.css'
 import Loader from './Loader'
 import PublicationCard from './PublicationCard'
-
-const ErrorMsg = error => {
-	return (
-		<div>
-			{/* Вы можете использовать свои стили и код для обработки ошибок */}
-			<p>Something went wrong!</p>
-			<p>{error.message}</p>
-		</div>
-	)
-}
+import Error from '../Error/Error'
 
 export default function MyPublicationsList({
 	publications,
@@ -24,7 +15,7 @@ export default function MyPublicationsList({
 
 	return (
 		<ImageList variant='quilted' cols={3} gap={9}>
-			<ErrorBoundary ErrorComponent={ErrorMsg}>
+			<ErrorBoundary ErrorComponent={Error}>
 				{publications.map(({ likeCount, id, title, image, user }, index) => {
 					if (index + 1 === publications.length) {
 						return (

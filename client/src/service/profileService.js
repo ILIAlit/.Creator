@@ -1,19 +1,19 @@
-import { $authApi } from '../http';
+import { $authApi } from '../http'
 
 export default class ProfileService {
 	static async createProfile(profileData) {
 		try {
-			return $authApi.post('profile/', profileData);
+			return $authApi.post('profile/', profileData)
 		} catch (error) {
-			console.log(error);
+			console.log(error)
 		}
 	}
 
 	static async getProfile() {
 		try {
-			return $authApi.get('profile/');
+			return $authApi.get('profile/')
 		} catch (error) {
-			console.log(error);
+			console.log(error)
 		}
 	}
 }

@@ -6,16 +6,7 @@ import { useAuthCheck } from '../../hooks/useAuthCheck'
 import Header from '../Header/Header'
 import AlertMessage from '../UI/AlertMessage'
 import Loader from '../UI/Loader'
-
-const ErrorMsg = error => {
-	return (
-		<div>
-			{/* Вы можете использовать свои стили и код для обработки ошибок */}
-			<p>Something went wrong!</p>
-			<p>{error.message}</p>
-		</div>
-	)
-}
+import Error from '../Error/Error'
 
 const Layout = ({ children }) => {
 	const {
@@ -30,7 +21,7 @@ const Layout = ({ children }) => {
 	return (
 		<div style={{ paddingTop: '100px' }}>
 			<Header isAuth={isAuth} user={user} logout={logout} />
-			<ErrorBoundary ErrorComponent={ErrorMsg}>{children}</ErrorBoundary>
+			<ErrorBoundary ErrorComponent={Error}>{children}</ErrorBoundary>
 			<AlertMessage />
 		</div>
 	)

@@ -5,7 +5,7 @@ import React from 'react'
 export default function EmailLinkIcon({ link }) {
 	return (
 		<Box>
-			<Link href={link}>
+			<Link href={`mailto: ${link}`}>
 				<Tooltip title={link}>
 					<EmailIcon
 						sx={{ color: 'action.active', mr: 0, my: 1.3, fontSize: 30 }}

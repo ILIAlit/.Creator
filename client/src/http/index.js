@@ -23,10 +23,11 @@ const authResponseInterceptorSuccess = function (config) {
 }
 
 const authResponseInterceptorError = function (error) {
-	if (error.response.status === 401) {
+	const token = localStorageService.getAccessToken()
+	if (error.response.status === 401 && token) {
 		try {
+			window.location.href = LOGIN_ROUTE
 			localStorageService.removeToken()
-			
 			return Promise.reject(error)
 		} catch (error) {
 			console.log('Не авторизован')
