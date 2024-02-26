@@ -5,7 +5,7 @@ module.exports = {
 	async up(queryInterface, Sequelize) {
 		return Promise.all([
 			queryInterface.changeColumn('profiles', 'status', {
-        type: Sequelize.DataTypes.STRING,
+				type: Sequelize.DataTypes.STRING,
 				defaultValue: '',
 			}),
 		])

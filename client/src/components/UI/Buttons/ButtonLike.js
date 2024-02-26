@@ -1,8 +1,9 @@
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import { Fab } from '@mui/material'
+import { Box, Fab } from '@mui/material'
 import React, { useContext } from 'react'
 import { Context } from '../../../context'
+import Loader from '../Loader'
 
 export default function ButtonLike({
 	size,
@@ -12,6 +13,7 @@ export default function ButtonLike({
 	...props
 }) {
 	const { likeStore, alertStore } = useContext(Context)
+	const { loading } = likeStore
 
 	const createLike = event => {
 		event.stopPropagation()
@@ -39,11 +41,15 @@ export default function ButtonLike({
 
 	return (
 		<Fab {...props}>
-			{isLike ? (
-				<FavoriteIcon sx={{ fontSize: size }} onClick={deleteLike} />
-			) : (
-				<FavoriteBorderIcon sx={{ fontSize: size }} onClick={createLike} />
-			)}
+			<Box sx={{ display: 'flex' }}>
+				{loading.isLoading ? (
+					<Loader size={25} />
+				) : isLike ? (
+					<FavoriteIcon sx={{ fontSize: size }} onClick={deleteLike} />
+				) : (
+					<FavoriteBorderIcon sx={{ fontSize: size }} onClick={createLike} />
+				)}
+			</Box>
 		</Fab>
 	)
 }

@@ -28,16 +28,10 @@ export default class ProfileStore {
 		return this._isProfile
 	}
 
-	async createProfile(profileData) {
+	async updateProfile(profileData) {
 		this.loading.setIsLoading(true)
 		try {
-			const response = await ProfileService.createProfile(profileData)
-			if (response) {
-				const {
-					data: { userProfile },
-				} = response
-				this.setProfile(userProfile)
-			}
+			const response = await ProfileService.updateProfile(profileData)
 			return response
 		} catch ({ response: { data } }) {
 			return { error: data.message }

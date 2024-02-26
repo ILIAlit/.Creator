@@ -10,12 +10,19 @@ class ProfileRepository {
 	}
 
 	async create(userId) {
-		const profile = await Profile.create({userId})
+		const profile = await Profile.create({ userId })
 		return profile
 	}
 
-	async update(profileData) {
-		const profile = await Profile.create(profileData)
+	async update(instagramLink, avatar, telegramLink, status, userId) {
+		const profile = await Profile.update(
+			{ instagramLink, avatar, telegramLink, status },
+			{
+				where: { userId },
+				returning: true,
+				plain: true,
+			}
+		)
 		return profile
 	}
 }

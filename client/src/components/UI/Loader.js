@@ -1,17 +1,26 @@
-import { Container, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import CircularProgress from '@mui/material/CircularProgress';
+import {
+	Container,
+	CssBaseline,
+	ThemeProvider,
+	createTheme,
+} from '@mui/material'
+import CircularProgress from '@mui/material/CircularProgress'
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme()
 
-const Loader = () => {
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth = "sx" sx={{m: 7, display: 'flex', justifyContent: 'center',}}>
-        <CssBaseline />
-        <CircularProgress />
-      </Container>
-    </ThemeProvider>
-  );
+const Loader = ({ size }) => {
+	return (
+		<ThemeProvider theme={defaultTheme}>
+			<Container
+				component='main'
+				maxWidth='sx'
+				sx={{ m: 5, display: 'flex', justifyContent: 'center' }}
+			>
+				<CssBaseline />
+				<CircularProgress size={size} />
+			</Container>
+		</ThemeProvider>
+	)
 }
 
-export default Loader;
+export default Loader

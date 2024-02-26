@@ -26,7 +26,7 @@ const FormProfile = ({ onSave }) => {
 			instagramLink: '',
 			telegramLink: '',
 			status: '',
-			avatar: '',
+			avatar: [],
 		},
 	})
 
@@ -38,12 +38,12 @@ const FormProfile = ({ onSave }) => {
 			formData.append('status', data.status)
 			formData.append('avatar', data.avatar[0])
 			profileStore
-				.createProfile(formData)
+				.updateProfile(formData)
 				.then(res => {
 					if (res.error) {
 						alertStore.alertOpen(res.error, 'error')
 					} else {
-						alertStore.alertOpen('Профиль создан', 'success')
+						alertStore.alertOpen('Изменения сохранены', 'success')
 					}
 				})
 				.finally(() => onSave())

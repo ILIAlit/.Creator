@@ -1,9 +1,9 @@
 import { $authApi } from '../http'
 
 export default class ProfileService {
-	static async createProfile(profileData) {
+	static async updateProfile(profileData) {
 		try {
-			return $authApi.post('profile/', profileData)
+			return $authApi.put('profile/', profileData)
 		} catch (error) {
 			console.log(error)
 		}

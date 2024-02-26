@@ -1,25 +1,25 @@
-import React from 'react';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import React from 'react'
 
 export default function MySelect({ value, onChange, label, options }) {
 	return (
 		<FormControl sx={{ minWidth: 200 }}>
-			<InputLabel id="select-label">{label}</InputLabel>
+			<InputLabel id='select-label'>{label}</InputLabel>
 			<Select
-				labelId="select-label"
+				labelId='select-label'
 				label={label}
 				value={value || ''}
 				onChange={onChange}
 			>
-				<MenuItem value="">
-					<em>None</em>
+				<MenuItem value=''>
+					<em>Популярные</em>
 				</MenuItem>
-				{options.map((item) => (
+				{options.map(item => (
 					<MenuItem key={item.value} value={item.value}>
 						{item.text}
 					</MenuItem>
 				))}
 			</Select>
 		</FormControl>
-	);
+	)
 }

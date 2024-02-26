@@ -6,10 +6,7 @@ export default function PublicationSort({ sort, setSort }) {
 	return (
 		<>
 			<MySelect
-				options={[
-					{ value: 'popular', text: 'Популярные' },
-					{ value: 'new', text: 'Новые' },
-				]}
+				options={[{ value: 'new', text: 'Новые' }]}
 				value={sort.orderBy}
 				onChange={event => setSort({ ...sort, orderBy: event.target.value })}
 				label='Выбор'

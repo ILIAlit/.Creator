@@ -15,31 +15,23 @@ class ProfileService {
 		}
 	}
 
-	async updateProfile(
-		name,
-		instagramLink = '',
-		telegramLink = '',
-		status = '',
-		avatarFile
-	) {
+	async updateProfile(user, instagramLink, telegramLink, status, avatarFile) {
+		const userId = user.id
+		let avatar = null
 		if (avatarFile) {
-			const avatar = await imageUploadService.uploadCloudImage(avatarFile)
+			avatar = await imageUploadService.uploadCloudImage(avatarFile)
 		}
-		const user = await User.findOne(name)
-		const isProfile = await Profile.get(user)
-		if (isProfile) {
-			throw ApiError.badRequest('Профиль существует!')
-		}
-		const userProfile = await Profile.create({
+		const userProfile = await Profile.update(
 			instagramLink,
 			avatar,
 			telegramLink,
 			status,
-			userId: user.id,
-		})
-		return {
-			userProfile,
+			userId
+		)
+		if (!userProfile) {
+			throw ApiError.badRequest('Ошибка обновления!')
 		}
+		return userProfile
 	}
 
 	async createProfile(name) {
