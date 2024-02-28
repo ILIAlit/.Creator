@@ -13,7 +13,7 @@ const defaultTheme = createTheme()
 const CreatePublication = () => {
 	return (
 		<ThemeProvider theme={defaultTheme}>
-			<Container component='main' maxWidth='md' sx={{ p: 5 }}>
+			<Container component='main' maxWidth='md' sx={{ pb: 3 }}>
 				<CssBaseline />
 				<Typography
 					component='h1'

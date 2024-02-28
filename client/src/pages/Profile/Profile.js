@@ -2,6 +2,7 @@ import {
 	Box,
 	Container,
 	CssBaseline,
+	Grid,
 	ThemeProvider,
 	Typography,
 	createTheme,
@@ -27,14 +28,19 @@ const Profile = () => {
 		<ThemeProvider theme={defaultTheme}>
 			<CssBaseline />
 			<ErrorBoundary ErrorComponent={Error}>
-				<Container sx={{ mb: 10 }} component='main' maxWidth='sx'>
+				<Container sx={{ mb: 10 }}>
 					<Box className='profile__user-name-block'>
-						<Typography component='h1' variant='h3' sx={{ mb: 3 }}>
+						<Typography
+							component='h1'
+							align='center'
+							variant='h3'
+							sx={{ mb: 3 }}
+						>
 							Привет, {name}
 						</Typography>
 					</Box>
 					<UserProfileInfo name={name} />
-					<Box sx={{ pl: 10, pr: 10, mt: 5 }}>
+					<Box sx={{ mt: 5 }}>
 						<UserActivityBar />
 					</Box>
 				</Container>

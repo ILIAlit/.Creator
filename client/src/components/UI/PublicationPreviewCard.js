@@ -18,22 +18,26 @@ export default function PublicationPreviewCard({
 	const { isSave, setIsSaveValue } = useCheckIsSavePublication(publicationId)
 
 	return (
-		<Box sx={{ pl: 10, pr: 10, m: 4 }}>
+		<Box margin={{ xs: 0 }} sx={{ m: { sm: 4 } }}>
 			<Grid
 				elevation={6}
 				container
 				component={Card}
 				sx={{
-					borderRadius: '20px',
+					borderRadius: { sm: '20px' },
+					minHeight: { md: 700, xs: 1200 },
 					height: '100vh',
 				}}
 			>
 				<Grid
 					item
-					xs={false}
-					sm={4}
+					xs={12}
+					sm={12}
 					md={7}
+					lg={7}
 					sx={{
+						aspectRatio: 1,
+						minHeight: 500,
 						backgroundImage: `url(${image})`,
 						backgroundRepeat: 'no-repeat',
 						backgroundColor: t =>
@@ -44,7 +48,7 @@ export default function PublicationPreviewCard({
 						backgroundPosition: 'center',
 					}}
 				/>
-				<Grid item xs={12} sm={8} md={5} sx={{ p: 4 }}>
+				<Grid item xs={12} sm={12} md={5} lg={5} sx={{ p: { sm: 4, xs: 2 } }}>
 					<Box>
 						<Typography gutterBottom component='h3' variant='h2'>
 							{title}
@@ -55,8 +59,14 @@ export default function PublicationPreviewCard({
 							{description}
 						</Typography>
 					</Box>
-					<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-						<Box sx={{ display: 'flex', gap: 2, mb: 6 }}>
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							alignItems: 'center',
+						}}
+					>
+						<Box sx={{ display: 'flex', gap: 2 }}>
 							<ButtonSave
 								setIsSave={setIsSaveValue}
 								publicationId={publicationId}

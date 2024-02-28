@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography } from '@mui/material'
+import { Avatar, Box, Grid, Typography } from '@mui/material'
 import React from 'react'
 import EmailLinkIcon from '../UI/EmailLinkIcon'
 import InstagramLinkIcon from '../UI/InstagramLinkIcon'
@@ -27,9 +27,11 @@ export default function ShowUserInfo({
 					{name}
 				</Typography>
 				{status && (
-					<Typography fontSize='16px' gutterBottom sx={{ maxWidth: '24ch' }}>
-						{status}
-					</Typography>
+					<Grid item>
+						<Typography fontSize='16px' gutterBottom sx={{ maxWidth: '24ch' }}>
+							{status}
+						</Typography>
+					</Grid>
 				)}
 
 				<Box sx={{ display: 'flex', gap: 2 }}>

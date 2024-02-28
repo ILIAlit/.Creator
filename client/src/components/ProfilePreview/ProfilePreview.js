@@ -11,7 +11,7 @@ const ProfilePreview = ({
 	name,
 }) => {
 	return (
-		<Box className='profile__preview-block' component='form'>
+		<Box className='profile__preview-block'>
 			<ShowUserInfo
 				avatar={avatar}
 				name={name}

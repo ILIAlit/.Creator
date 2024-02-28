@@ -13,20 +13,24 @@ class PublicationRepository {
 	async getUserPublications(userId, limit, offset) {
 		const publications = await Publication.findAndCountAll({
 			where: { userId },
-			include: [{ model: User, attributes: ['name'] }],
 			limit,
 			offset,
+			include: [{ model: User, attributes: ['name'] }],
 		})
 		return publications
 	}
 
 	async getOnePublication(id) {
-		const publication = await Publication.findByPk(id, {include: [{ model: User, attributes: ['name'] }] })
+		const publication = await Publication.findByPk(id, {
+			include: [{ model: User, attributes: ['name'] }],
+		})
 		return publication
 	}
 
 	async getPublicationsByTag(tagId, limit, offset) {
 		const publications = await Publication.findAndCountAll({
+			limit,
+			offset,
 			include: [
 				{
 					model: Tag,
@@ -34,16 +38,15 @@ class PublicationRepository {
 				},
 				{ model: User, attributes: ['name'] },
 			],
-			limit,
-			offset,
 		})
 		return publications
 	}
 
 	async getPublications(limit, offset) {
 		const publications = await Publication.findAndCountAll({
-			limit,
 			offset,
+			limit,
+
 			include: { model: User, attributes: ['name'] },
 		})
 		return publications
@@ -51,6 +54,9 @@ class PublicationRepository {
 
 	async getNewPublicationsByTag(tagId, limit, offset) {
 		const publications = await Publication.findAndCountAll({
+			order: [['createdAt', 'DESC']],
+			limit,
+			offset,
 			include: [
 				{
 					model: Tag,
@@ -58,18 +64,15 @@ class PublicationRepository {
 				},
 				{ model: User, attributes: ['name'] },
 			],
-			limit,
-			offset,
-			order: [['createdAt', 'DESC']],
 		})
 		return publications
 	}
 
 	async getNewPublications(limit, offset) {
 		const publications = await Publication.findAndCountAll({
+			order: [['createdAt', 'DESC']],
 			limit,
 			offset,
-			order: [['createdAt', 'DESC']],
 			include: { model: User, attributes: ['name'] },
 		})
 		return publications

@@ -47,21 +47,21 @@ export default function UserActivityBar() {
 				<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 					<UserActivityTabs onChange={handleChange} />
 				</Box>
-				<TabPanel value={'publications'}>
+				<TabPanel sx={{ p: 0 }} value={'publications'}>
 					<MyPublicationsList
 						publications={myPublications}
 						isLoading={loading.isLoading}
 						lastElement={lastElement}
 					/>
 				</TabPanel>
-				<TabPanel value={'favorites'}>
+				<TabPanel sx={{ p: 0 }} value={'favorites'}>
 					<MyPublicationsList
 						publications={myFavorites}
 						isLoading={loading.isLoading}
 						lastElement={lastElement}
 					/>
 				</TabPanel>
-				<TabPanel value={'liked'}>
+				<TabPanel sx={{ p: 0 }} value={'liked'}>
 					<MyPublicationsList
 						publications={myLikes}
 						isLoading={loading.isLoading}

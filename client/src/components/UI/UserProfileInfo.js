@@ -10,13 +10,7 @@ import Loader from './Loader'
 export default observer(function UserProfileInfo({ name }) {
 	const { profileStore } = useContext(Context)
 	const { profile, isProfile, loading } = profileStore
-	const {
-		avatar,
-		instagramLink,
-		telegramLink,
-		status,
-		user,
-	} = profile
+	const { avatar, instagramLink, telegramLink, status, user } = profile
 	const email = user?.email
 
 	const [previewVisible, setPreviewVisible] = useState(true)
@@ -39,7 +33,7 @@ export default observer(function UserProfileInfo({ name }) {
 
 	return (
 		<Box className='profile__user-info-block'>
-			<Paper elevation={3} sx={{ p: 2 }}>
+			<Paper elevation={3} sx={{ p: 2, width: { xs: '100%', sm: 'auto' } }}>
 				{previewVisible ? (
 					<ProfilePreview
 						name={name}

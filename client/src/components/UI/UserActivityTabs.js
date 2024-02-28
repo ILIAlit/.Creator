@@ -7,12 +7,20 @@ export default function UserActivityTabs({ onChange }) {
 	return (
 		<TabList onChange={onChange} aria-label='lab API tabs example'>
 			<Tab
-				sx={{ fontSize: '19px' }}
+				sx={{ fontSize: { xs: 9, sm: 16 } }}
 				label='Мои публикации'
 				value={'publications'}
 			/>
-			<Tab sx={{ fontSize: '19px' }} label='Избранный' value={'favorites'} />
-			<Tab sx={{ fontSize: '19px' }} label='Отметка нравится' value={'liked'} />
+			<Tab
+				sx={{ fontSize: { xs: 9, sm: 16 } }}
+				label='Избранный'
+				value={'favorites'}
+			/>
+			<Tab
+				sx={{ fontSize: { xs: 9, sm: 16 } }}
+				label='Отметка нравится'
+				value={'liked'}
+			/>
 		</TabList>
 	)
 }

@@ -28,11 +28,11 @@ const CreatePublicationForm = () => {
 		resolver: yupResolver(schema),
 		defaultValues: {
 			title: '',
-            description: '',
-            link: '',
-            publTag,
+			description: '',
+			link: '',
+			publTag,
 			image: '',
-		}
+		},
 	})
 
 	const onSubmit = data => {

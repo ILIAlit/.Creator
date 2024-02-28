@@ -54,15 +54,18 @@ const Home = () => {
 		getSortedPublications(1, sort)
 	}, [sort])
 
+	console.log('Publications', publications)
+
 	return (
 		<ThemeProvider theme={defaultTheme}>
 			<Grid>
 				<CssBaseline />
-				<Box sx={{ m: 3, mb: 10 }}>
+				<Box sx={{ m: 3, mb: 10, mt: 7 }}>
 					<Container component='main' maxWidth='sm'>
 						<Typography
 							component='h1'
 							variant='h2'
+							fontSize={{ lg: 55, xs: 50 }}
 							align='center'
 							color='textPrimary'
 							gutterBottom

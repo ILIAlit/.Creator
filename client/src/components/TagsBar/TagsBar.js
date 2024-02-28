@@ -1,4 +1,4 @@
-import { Skeleton, Tab } from '@mui/material'
+import { Box, Grid, Skeleton, Tab } from '@mui/material'
 import Tabs, { tabsClasses } from '@mui/material/Tabs'
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../context'
@@ -19,13 +19,13 @@ export default function TagsBar({ value, onChange }) {
 
 	if (loading.isLoading) {
 		return (
-			<>
+			<Box sx={{ display: 'flex', gap: 1 }}>
 				<Skeleton animation='wave' height={80} width='80%' />
 				<Skeleton animation='wave' height={80} width='70%' />
 				<Skeleton animation='wave' height={80} width='40%' />
 				<Skeleton animation='wave' height={80} width='70%' />
 				<Skeleton animation='wave' height={80} width='50%' />
-			</>
+			</Box>
 		)
 	}
 

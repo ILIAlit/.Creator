@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function MySelect({ value, onChange, label, options }) {
 	return (
-		<FormControl sx={{ minWidth: 200 }}>
+		<FormControl fullWidth sx={{ minWidth: 200 }}>
 			<InputLabel id='select-label'>{label}</InputLabel>
 			<Select
 				labelId='select-label'
@@ -12,7 +12,7 @@ export default function MySelect({ value, onChange, label, options }) {
 				onChange={onChange}
 			>
 				<MenuItem value=''>
-					<em>Популярные</em>
+					<em>По умолчанию</em>
 				</MenuItem>
 				{options.map(item => (
 					<MenuItem key={item.value} value={item.value}>

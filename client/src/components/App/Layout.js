@@ -7,6 +7,7 @@ import Header from '../Header/Header'
 import AlertMessage from '../UI/AlertMessage'
 import Loader from '../UI/Loader'
 import Error from '../Error/Error'
+import { CssBaseline } from '@mui/material'
 
 const Layout = ({ children }) => {
 	const {
@@ -19,7 +20,8 @@ const Layout = ({ children }) => {
 	}
 
 	return (
-		<div style={{ paddingTop: '100px' }}>
+		<div style={{ paddingTop: '56px' }}>
+			<CssBaseline />
 			<Header isAuth={isAuth} user={user} logout={logout} />
 			<ErrorBoundary ErrorComponent={Error}>{children}</ErrorBoundary>
 			<AlertMessage />

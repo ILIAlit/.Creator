@@ -45,7 +45,10 @@ const Header = ({ isAuth, user, logout }) => {
 	}
 
 	return (
-		<AppBar sx={{ position: 'fixed' }} className='appBar'>
+		<AppBar
+			sx={{ position: 'fixed', minHeight: '64px', justifyContent: 'center' }}
+			className='appBar'
+		>
 			<CssBaseline />
 			<Container maxWidth='xl'>
 				<Toolbar disableGutters>
@@ -58,7 +61,7 @@ const Header = ({ isAuth, user, logout }) => {
 							margin: '15px',
 						}}
 					/>
-					<BurgerMenu />
+					<BurgerMenu isAuth={isAuth} />
 					<Logo
 						variant='h5'
 						sx={{

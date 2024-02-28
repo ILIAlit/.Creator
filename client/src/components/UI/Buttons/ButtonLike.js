@@ -1,11 +1,12 @@
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import { Box, Fab } from '@mui/material'
+import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { Context } from '../../../context'
 import Loader from '../Loader'
 
-export default function ButtonLike({
+export default observer(function ButtonLike({
 	size,
 	isLike,
 	setIsLike,
@@ -52,4 +53,4 @@ export default function ButtonLike({
 			</Box>
 		</Fab>
 	)
-}
+})

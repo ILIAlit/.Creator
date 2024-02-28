@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { useCheckIsLikePublication } from '../../hooks/useCheckIsLikePublication'
 import { useCheckIsSavePublication } from '../../hooks/useCheckIsSavePublication'
 import { PREVIEW_PUBLICATION_ROUTE } from '../../utils/consts'
-import CardCover from './CardCover'
 import MyCardContent from './MyCardContent'
+import CardCover from './CardCover'
 
 export default forwardRef(function PublicationCard(
 	{ id, title, src, author, likeCount },
@@ -26,17 +26,12 @@ export default forwardRef(function PublicationCard(
 				<Box sx={{ position: 'relative' }}>
 					<CardActionArea onClick={cardClick}>
 						<CardMedia component='img' alt={title} height='340' image={src} />
-						<CardCover
-							setIsSave={setIsSaveValue}
-							isSave={isSave}
-							setIsLike={setIsLikeValue}
-							publicationId={id}
-							isLike={isLike}
-							title={title}
-						/>
+						<CardCover title={title} />
 					</CardActionArea>
 				</Box>
-				<MyCardContent author={author} likeCount={likeCount} />
+				<Box sx={{ p: 3 }}>
+					<MyCardContent author={author} likeCount={likeCount} />
+				</Box>
 			</Card>
 		</Paper>
 	)

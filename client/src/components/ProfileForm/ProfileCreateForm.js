@@ -9,8 +9,8 @@ import { useForm } from 'react-hook-form'
 import { Context } from '../../context/index'
 import ImageForm from '../UI/ImageForm'
 import Input from '../UI/Input'
-import { validationSchema } from './validation'
 import InputMultiLine from '../UI/InputMultiLine'
+import { validationSchema } from './validation'
 
 const FormProfile = ({ onSave }) => {
 	const { profileStore, alertStore } = useContext(Context)
@@ -52,11 +52,12 @@ const FormProfile = ({ onSave }) => {
 
 	return (
 		<Box
+			fullWidth
 			sx={{
-				margin: 4,
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
+				maxWidth: 500,
 			}}
 			component='form'
 			onSubmit={handleSubmit(onSubmit)}
@@ -68,9 +69,10 @@ const FormProfile = ({ onSave }) => {
 				width='160px'
 				height='160px'
 			/>
-			<Box maxWidth='xs' sx={{ mt: 2 }}>
+			<Box sx={{ mt: 2, width: '100%' }}>
 				<Box sx={{ display: 'flex', alignItems: 'flex-end', mb: 2 }}>
 					<InputMultiLine
+						control={control}
 						control={control}
 						name='status'
 						error={!!errors.status?.message}
@@ -81,7 +83,13 @@ const FormProfile = ({ onSave }) => {
 						type='text'
 					/>
 				</Box>
-				<Box sx={{ display: 'flex', gap: 2 }}>
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: { xs: 'column', sm: 'row' },
+						gap: 2,
+					}}
+				>
 					<Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
 						<Instagram sx={{ color: 'action.active', mr: 1, my: 1.3 }} />
 						<Input

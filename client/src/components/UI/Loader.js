@@ -14,7 +14,7 @@ const Loader = ({ size }) => {
 			<Container
 				component='main'
 				maxWidth='sx'
-				sx={{ m: 5, display: 'flex', justifyContent: 'center' }}
+				sx={{ mt: 5, display: 'flex', justifyContent: 'center' }}
 			>
 				<CssBaseline />
 				<CircularProgress size={size} />
